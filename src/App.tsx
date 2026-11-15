@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { UserProfile, SoundSettings, GameId } from './types';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { UserProfile, SoundSettings, GameId, GameCategory } from './types';
 import { storageManager } from './services/storage';
 import { soundManager } from './services/sound';
+import {
+  AppNavigationState,
+  createInitialNavigationState,
+  openGameWithReturnContext,
+  exitGameWithReturnContext,
+  navigateTopLevelView,
+} from './services/navigation';
 import { Header } from './components/common/Header';
 import { MobileBottomNav } from './components/common/MobileBottomNav';
 import { SettingsModal } from './components/common/SettingsModal';
@@ -24,18 +31,26 @@ import { BaccaratGame } from './games/baccarat/BaccaratGame';
 import { DiceGame } from './games/dice/DiceGame';
 import { SlotsGame } from './games/slots/SlotsGame';
 import { TeenPattiGame } from './games/teen_patti/TeenPattiGame';
+import { PlinkoGame } from './games/plinko/PlinkoGame';
+import { CrashGame } from './games/crash/CrashGame';
+import { MinesGame } from './games/mines/MinesGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
 export default function App() {
   const [profile, setProfile] = useState<UserProfile>(() => storageManager.getProfile());
   const [soundSettings, setSoundSettings] = useState<SoundSettings>(() => storageManager.getSoundSettings());
-  const [currentView, setCurrentView] = useState<string>('lobby');
+  const [navState, setNavState] = useState<AppNavigationState>(() =>
+    createInitialNavigationState('lobby')
+  );
   const [selectedGameForRules, setSelectedGameForRules] = useState<GameId>('blackjack');
   const [isRulesOpen, setIsRulesOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [isFirebaseOpen, setIsFirebaseOpen] = useState<boolean>(false);
   const [isSplashActive, setIsSplashActive] = useState<boolean>(true);
+
+  const currentView = navState.currentView;
+  const pendingScrollRestoreRef = useRef<number | null>(null);
 
   // Sync profile from storage
   const refreshProfile = () => {
@@ -50,10 +65,52 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSelectGame = (gameId: GameId) => {
+  useEffect(() => {
+    if (
+      pendingScrollRestoreRef.current !== null &&
+      !currentView.startsWith('game_') &&
+      typeof window !== 'undefined'
+    ) {
+      const targetY = pendingScrollRestoreRef.current;
+      pendingScrollRestoreRef.current = null;
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: targetY, behavior: 'auto' });
+      });
+    }
+  }, [currentView]);
+
+  const handleNavigate = useCallback((view: string, resetScroll: boolean = true) => {
+    pendingScrollRestoreRef.current = null;
+    setNavState(prev => navigateTopLevelView(prev, view));
+    if (resetScroll && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  const handleSelectGame = useCallback((gameId: GameId) => {
+    const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     setSelectedGameForRules(gameId);
-    setCurrentView(`game_${gameId}`);
-  };
+    setNavState(prev => openGameWithReturnContext(prev, gameId, scrollY));
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, []);
+
+  const handleExitGame = useCallback(() => {
+    setNavState(prev => {
+      const { nextState, restoreScrollY } = exitGameWithReturnContext(prev);
+      pendingScrollRestoreRef.current = restoreScrollY;
+      return nextState;
+    });
+  }, []);
+
+  const handleGamesCategoryChange = useCallback((category: GameCategory) => {
+    setNavState(prev => ({ ...prev, gamesCategory: category }));
+  }, []);
+
+  const handleGamesSearchChange = useCallback((query: string) => {
+    setNavState(prev => ({ ...prev, gamesSearchQuery: query }));
+  }, []);
 
   const { canClaim: canClaimReward } = storageManager.canClaimDailyReward();
 
@@ -108,14 +165,11 @@ export default function App() {
       {/* Universal Top Header */}
       <Header
         currentView={currentView}
-        onNavigate={view => {
-          setCurrentView(view);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onNavigate={view => handleNavigate(view, true)}
         profile={profile}
         soundSettings={soundSettings}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenDailyReward={() => setCurrentView('wallet')}
+        onOpenDailyReward={() => handleNavigate('wallet', true)}
         canClaimDailyReward={canClaimReward}
       />
 
@@ -125,8 +179,8 @@ export default function App() {
           <Lobby
             profile={profile}
             onSelectGame={handleSelectGame}
-            onNavigate={setCurrentView}
-            onOpenDailyReward={() => setCurrentView('wallet')}
+            onNavigate={view => handleNavigate(view, true)}
+            onOpenDailyReward={() => handleNavigate('wallet', true)}
             canClaimDailyReward={canClaimReward}
             onUpdateProfile={refreshProfile}
           />
@@ -135,7 +189,11 @@ export default function App() {
         {currentView === 'games' && (
           <GamesList
             onSelectGame={handleSelectGame}
-            onNavigateToMultiplayer={() => setCurrentView('multiplayer')}
+            onNavigateToMultiplayer={() => handleNavigate('multiplayer', true)}
+            selectedCategory={navState.gamesCategory}
+            onSelectCategory={handleGamesCategoryChange}
+            searchQuery={navState.gamesSearchQuery}
+            onSearchChange={handleGamesSearchChange}
           />
         )}
 
@@ -153,7 +211,7 @@ export default function App() {
           <MultiplayerPage
             profile={profile}
             onOpenFirebaseGuide={() => setIsFirebaseOpen(true)}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={() => handleNavigate('lobby', true)}
           />
         )}
 
@@ -166,7 +224,7 @@ export default function App() {
               setSelectedGameForRules('blackjack');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -178,7 +236,7 @@ export default function App() {
               setSelectedGameForRules('roulette');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -190,7 +248,7 @@ export default function App() {
               setSelectedGameForRules('poker');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -202,7 +260,7 @@ export default function App() {
               setSelectedGameForRules('baccarat');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -214,7 +272,7 @@ export default function App() {
               setSelectedGameForRules('dice');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -226,7 +284,7 @@ export default function App() {
               setSelectedGameForRules('slots');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
           />
         )}
 
@@ -238,7 +296,43 @@ export default function App() {
               setSelectedGameForRules('teen_patti');
               setIsRulesOpen(true);
             }}
-            onBackToLobby={() => setCurrentView('lobby')}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_plinko' && (
+          <PlinkoGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('plinko');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_crash' && (
+          <CrashGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('crash');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_mines' && (
+          <MinesGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('mines');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
           />
         )}
       </main>
@@ -247,10 +341,7 @@ export default function App() {
       {!isPlayingGame && (
         <MobileBottomNav
           currentView={currentView}
-          onNavigate={view => {
-            setCurrentView(view);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onNavigate={view => handleNavigate(view, true)}
         />
       )}
 

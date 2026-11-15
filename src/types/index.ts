@@ -11,9 +11,9 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines';
 
-export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'multiplayer';
+export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
 export type TransactionType = 'bet' | 'win' | 'daily_reward' | 'quest' | 'reload' | 'split_bet' | 'insurance';
 
@@ -271,5 +271,51 @@ export interface TeenPattiEvaluation {
   type: TeenPattiHandRankType;
   name: string;
   score: number;
+}
+
+/* Plinko */
+export type PlinkoRiskLevel = 'LOW' | 'MEDIUM' | 'HIGH';
+export type PlinkoRowCount = 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
+
+export interface PlinkoRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  rows: PlinkoRowCount;
+  risk: PlinkoRiskLevel;
+  slotIndex: number;
+  multiplier: number;
+  payout: number;
+  net: number;
+}
+
+/* Crash */
+export type CrashRoundState = 'READY' | 'RUNNING' | 'CASHED_OUT' | 'CRASHED';
+
+export interface CrashRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  finalCrashMultiplier: number;
+  cashOutMultiplier: number | null;
+  payout: number;
+  net: number;
+  outcome: 'CASHED_OUT' | 'CRASHED';
+}
+
+/* Royal Mines */
+export type MinesGameState = 'READY' | 'PLAYING' | 'CASHED_OUT' | 'LOST' | 'WON';
+export type MinesRiskTier = 'Low' | 'Medium' | 'High' | 'Extreme';
+
+export interface MinesRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  mineCount: number;
+  safeRevealed: number;
+  multiplier: number;
+  payout: number;
+  net: number;
+  outcome: 'CASHED_OUT' | 'WON' | 'LOST';
 }
 

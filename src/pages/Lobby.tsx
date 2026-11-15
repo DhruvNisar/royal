@@ -9,6 +9,9 @@ import {
   gameRouletteWheelImg,
   gameSlotsNeonImg,
   gameTeenPattiTableImg,
+  gamePlinkoBoardImg,
+  gameCrashRocketImg,
+  gameMinesVaultImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -100,6 +103,36 @@ export const Lobby: React.FC<LobbyProps> = ({
       payout: 'Up to 1,000x',
       image: gameSlotsNeonImg,
       badge: 'Jackpot',
+    },
+    {
+      id: 'plinko' as GameId,
+      title: 'Royal Plinko',
+      subtitle: '8–16 Peg Rows · Custom Risk',
+      category: 'Arcade Game',
+      minBet: '10 coins',
+      payout: 'High Multipliers',
+      image: gamePlinkoBoardImg,
+      badge: 'New Arcade',
+    },
+    {
+      id: 'crash' as GameId,
+      title: 'Rocket Crash',
+      subtitle: 'Live Curve · Cash Out Anytime',
+      category: 'Arcade Game',
+      minBet: '10 coins',
+      payout: 'Up to 1,000x',
+      image: gameCrashRocketImg,
+      badge: 'New Arcade',
+    },
+    {
+      id: 'mines' as GameId,
+      title: 'Royal Mines',
+      subtitle: '5×5 Vault Grid · 1–24 Mines',
+      category: 'Arcade Game',
+      minBet: '10 coins',
+      payout: '97% RTP Gems',
+      image: gameMinesVaultImg,
+      badge: 'New Arcade',
     },
   ];
 
@@ -213,7 +246,7 @@ export const Lobby: React.FC<LobbyProps> = ({
               }}
               className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
             >
-              <span>View All 7 Games</span>
+              <span>View All 10 Games</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

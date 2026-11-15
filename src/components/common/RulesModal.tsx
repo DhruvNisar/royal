@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, BookOpen, Award, CheckCircle2 } from 'lucide-react';
 import { GameId } from '../../types';
 import { soundManager } from '../../services/sound';
@@ -16,6 +16,10 @@ export const RulesModal: React.FC<RulesModalProps> = ({
 }) => {
   const [selectedGame, setSelectedGame] = useState<GameId>(initialGame);
 
+  useEffect(() => {
+    setSelectedGame(initialGame);
+  }, [initialGame]);
+
   if (!isOpen) return null;
 
   const games: { id: GameId; label: string }[] = [
@@ -26,6 +30,9 @@ export const RulesModal: React.FC<RulesModalProps> = ({
     { id: 'teen_patti', label: 'Teen Patti' },
     { id: 'dice', label: 'Dice Arena' },
     { id: 'slots', label: 'Royal Slots' },
+    { id: 'plinko', label: 'Royal Plinko' },
+    { id: 'crash', label: 'Rocket Crash' },
+    { id: 'mines', label: 'Royal Mines' },
   ];
 
   return (
@@ -257,6 +264,92 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     <li>5. <span className="text-amber-300 font-bold">Pair:</span> Two cards of identical rank + kicker</li>
                     <li>6. <span className="text-amber-300 font-bold">High Card:</span> Highest ranked individual card</li>
                     <li className="pt-1 text-[11px] text-amber-200/80 italic">• Tie rule: Show/Sideshow caller loses equal hands.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'plinko' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Plinko Rules &amp; Mechanics</h3>
+              <p>
+                Drop virtual coins from the top of a triangular peg pyramid. Each bounce randomly moves Left or Right with equal 50/50 probability using browser cryptographic randomness until landing in one of the bottom multiplier pockets.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Board Configuration</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Peg Rows: <span className="text-amber-300 font-bold">8 to 16 rows</span> (9 to 17 slots)</li>
+                    <li>• Risk Levels: <span className="text-amber-300 font-bold">LOW, MEDIUM, HIGH</span></li>
+                    <li>• Target RTP: <span className="text-emerald-400 font-bold">~97.00%</span> across all 27 boards</li>
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 5,000 virtual coins</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Payout &amp; Auto-Drop</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Payout = Bet &times; Landed Slot Multiplier (whole coins)</li>
+                    <li>• Outer pockets offer highest multipliers; center pockets offer higher hit frequency</li>
+                    <li>• Auto-Drop runs sequential drops and can be stopped anytime</li>
+                    <li>• Strictly fictional virtual entertainment coins</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'crash' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Rocket Crash Rules &amp; Mechanics</h3>
+              <p>
+                Place a wager and launch the rocket. Watch the multiplier climb smoothly from 1.00x upward and cash out before the predetermined crash point arrives.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Flight Rules</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 5,000 virtual coins</span></li>
+                    <li>• Max Multiplier Cap: <span className="text-amber-300 font-bold">1,000.00x</span></li>
+                    <li>• Cash-out strictly before crash wins Bet &times; Multiplier</li>
+                    <li>• Includes ~3% immediate 1.00x crash probability (97% RTP curve)</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Auto Cash-Out &amp; Fairness Note</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Set an optional target (1.01x–1,000x) for automatic cash-out</li>
+                    <li>• Crash point is determined via local <span className="font-mono text-slate-200">crypto.getRandomValues</span> prior to liftoff</li>
+                    <li>• Local single-player virtual coins only; no real-money play</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'mines' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Mines Rules &amp; Mechanics</h3>
+              <p>
+                Uncover glowing royal diamonds across a 5×5 vault grid (25 tiles) while avoiding hidden mines. Every diamond revealed multiplies your potential payout. Cash out anytime after at least one diamond reveal, or clear all safe tiles for the maximum payout.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Board &amp; Stakes</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Board: <span className="text-slate-200 font-semibold">5×5 grid (25 tiles)</span></li>
+                    <li>• Mines: <span className="text-amber-300 font-bold">Choose 1 to 24 mines</span></li>
+                    <li>• Safe Tiles: <span className="text-cyan-300 font-bold">25 − Selected Mines</span></li>
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 5,000 virtual coins</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Multipliers, RTP &amp; Auto Play</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Survival Probability: <span className="font-mono text-slate-200">P(K) = C(S,K) / C(25,K)</span></li>
+                    <li>• Multiplier: <span className="text-emerald-400 font-bold">0.97 / P(K)</span> (97% theoretical RTP)</li>
+                    <li>• Payout = <span className="text-slate-200 font-semibold">Bet × Multiplier(K)</span> rounded to whole coins</li>
+                    <li>• Hitting a mine ends the round; Auto Play supports target rounds, picks, and win/loss stops</li>
                   </ul>
                 </div>
               </div>

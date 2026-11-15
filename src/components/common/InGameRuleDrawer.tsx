@@ -35,6 +35,9 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'baccarat' && 'VIP Baccarat – Punto Banco Rules'}
                 {gameId === 'dice' && 'Dice Arena – Prediction Guide'}
                 {gameId === 'slots' && 'Royal Ace Slots – Paytable & Bonus Guide'}
+                {gameId === 'plinko' && 'Royal Plinko – Peg Board & Risk Guide'}
+                {gameId === 'crash' && 'Rocket Crash – Flight & Cash-Out Guide'}
+                {gameId === 'mines' && 'Royal Mines – Vault Grid & Multiplier Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -219,6 +222,55 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">Royal Crown (Wild):</strong> Substitutes for any regular symbol to complete winning lines.</li>
                 <li><strong className="text-slate-100">Gold Scatter:</strong> 3 or more Scatters anywhere on the reels trigger 10 Free Spins with an active 2x Multiplier.</li>
                 <li><strong className="text-slate-100">Rolling Reels:</strong> Click spin to trigger smooth rolling reel animation that stops consecutively across each reel.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* PLINKO RULES */}
+          {gameId === 'plinko' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Drop a ball from the top of the peg pyramid and land in the highest-multiplier pocket at the base. Edge slots pay the biggest multipliers!
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Betting Limits:</strong> Wager between 10 and 5,000 virtual coins per drop. Use 1/2, 2x, Max, or +/- buttons to adjust stakes quickly.</li>
+                <li><strong className="text-slate-100">Rows (8–16):</strong> Choose between 8 and 16 peg rows. More rows add more slots (rows + 1) and widen outer multipliers.</li>
+                <li><strong className="text-slate-100">Risk Levels:</strong> <strong>LOW</strong> delivers steadier center returns; <strong>MEDIUM</strong> balances variance; <strong>HIGH</strong> concentrates massive payouts in outer edge pockets.</li>
+                <li><strong className="text-slate-100">Payout &amp; RTP:</strong> Payouts equal Bet &times; Landed Slot Multiplier (rounded to whole coins). All 27 boards target ~97% theoretical RTP under a symmetric binomial distribution.</li>
+                <li><strong className="text-slate-100">Auto-Drop:</strong> Schedule sequential automated drops and click Stop Auto at any moment to halt cleanly after the active drop settles.</li>
+                <li><strong className="text-slate-100">Local RNG Notice:</strong> Outcomes are generated locally using browser cryptographic randomness (crypto.getRandomValues) with virtual coins only.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* CRASH RULES */}
+          {gameId === 'crash' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Launch the rocket and click <strong>CASH OUT</strong> before the flight crashes to lock in your bet multiplied by the current climb value.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Betting &amp; Launch:</strong> Wager 10 to 5,000 virtual coins per flight. The multiplier begins at 1.00x and accelerates smoothly upward up to 1,000.00x.</li>
+                <li><strong className="text-slate-100">Manual Cash-Out:</strong> Click CASH OUT strictly before the crash point to win Bet &times; Cash-Out Multiplier (rounded to whole coins).</li>
+                <li><strong className="text-slate-100">Auto Cash-Out:</strong> Optionally set a target (1.01x–1,000x) before launch. If the flight reaches your target before crashing, it settles automatically.</li>
+                <li><strong className="text-slate-100">Immediate 1.00x Crash:</strong> Under the 97% RTP inverse curve, ~3% of flights crash immediately at 1.00x before any cash-out is possible.</li>
+                <li><strong className="text-slate-100">Local RNG Notice:</strong> The crash point is generated locally via browser cryptographic randomness (crypto.getRandomValues) before liftoff, using fictional virtual coins only.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* MINES RULES */}
+          {gameId === 'mines' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Reveal safe diamond tiles on the 5×5 grid without triggering a hidden mine. Cash out anytime after at least one diamond reveal to lock in your multiplied virtual coin payout.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Board &amp; Mine Setup:</strong> Pick between 1 and 24 mines before starting a round (Safe tiles = 25 − Mines). Wager 10 to 5,000 virtual coins.</li>
+                <li><strong className="text-slate-100">Exact Multiplier Formula:</strong> After K safe diamonds, survival probability is <span className="font-mono text-slate-200">P(K) = Π (S−i)/(25−i)</span> and multiplier equals <span className="font-mono text-emerald-300">0.97 / P(K)</span> (97% theoretical RTP).</li>
+                <li><strong className="text-slate-100">Cash Out or Full Clear:</strong> Cash out after 1 or more diamonds for <span className="font-mono text-slate-200">Bet × Multiplier</span> rounded to whole coins. Revealing every safe tile automatically awards the maximum payout.</li>
+                <li><strong className="text-slate-100">Mine Hit:</strong> Uncovering a mine ends the round immediately, reveals all remaining mines, and forfeits the stake.</li>
+                <li><strong className="text-slate-100">Auto Play &amp; Local RNG:</strong> Optionally configure automated rounds with safe pick counts and profit/loss limits. Mine positions are fixed before the first click using <span className="font-mono text-slate-200">crypto.getRandomValues</span> with fictional coins only.</li>
               </ul>
             </div>
           )}

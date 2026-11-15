@@ -9,17 +9,24 @@ import {
   gameRouletteWheelImg,
   gameSlotsNeonImg,
   gameTeenPattiTableImg,
+  gamePlinkoBoardImg,
+  gameCrashRocketImg,
+  gameMinesVaultImg,
 } from '../assets/images';
 
 interface GamesListProps {
   onSelectGame: (gameId: GameId) => void;
   onNavigateToMultiplayer: () => void;
+  selectedCategory?: GameCategory;
+  onSelectCategory?: (category: GameCategory) => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
 }
 
 interface GameCardItem {
   id: GameId;
   title: string;
-  category: 'cards' | 'table' | 'dice' | 'multiplayer';
+  category: 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
   categoryLabel: string;
   description: string;
   minBet: number;
@@ -110,14 +117,56 @@ const ALL_GAMES: GameCardItem[] = [
     rulesHighlight: 'Scatter Free Spins · 20 Active Paylines · Wild Crowns',
     image: gameSlotsNeonImg,
   },
+  {
+    id: 'plinko',
+    title: 'Royal Plinko',
+    category: 'arcade',
+    categoryLabel: 'Arcade Game',
+    description: 'Drop virtual coins down a golden peg pyramid. Customize 8–16 rows and Low, Medium, or High risk for big edge multipliers.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '8–16 Peg Rows · Low/Medium/High Risk · Auto-Drop Mode',
+    image: gamePlinkoBoardImg,
+  },
+  {
+    id: 'crash',
+    title: 'Rocket Crash',
+    category: 'arcade',
+    categoryLabel: 'Arcade Game',
+    description: 'Ride an ascending multiplier curve in real time and cash out before the rocket crashes. Supports manual and auto cash-out.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: 'Real-Time Multiplier · Manual & Auto Cash-Out · Up to 1,000x',
+    image: gameCrashRocketImg,
+  },
+  {
+    id: 'mines',
+    title: 'Royal Mines',
+    category: 'arcade',
+    categoryLabel: 'Arcade Game',
+    description: 'Find hidden diamonds, avoid dangerous mines and cash out before your luck runs out.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '5×5 Vault Grid · 1–24 Mines · 97% Theoretical RTP',
+    image: gameMinesVaultImg,
+  },
 ];
 
 export const GamesList: React.FC<GamesListProps> = ({
   onSelectGame,
   onNavigateToMultiplayer,
+  selectedCategory: controlledCategory,
+  onSelectCategory,
+  searchQuery: controlledSearchQuery,
+  onSearchChange,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<GameCategory>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [internalCategory, setInternalCategory] = useState<GameCategory>('all');
+  const [internalSearchQuery, setInternalSearchQuery] = useState<string>('');
+
+  const selectedCategory = controlledCategory ?? internalCategory;
+  const setSelectedCategory = onSelectCategory ?? setInternalCategory;
+  const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+  const setSearchQuery = onSearchChange ?? setInternalSearchQuery;
 
   const filteredGames = ALL_GAMES.filter(game => {
     const matchesCategory =
@@ -163,6 +212,7 @@ export const GamesList: React.FC<GamesListProps> = ({
             { id: 'cards' as GameCategory, label: 'Card Games' },
             { id: 'table' as GameCategory, label: 'Table Games' },
             { id: 'dice' as GameCategory, label: 'Dice Games' },
+            { id: 'arcade' as GameCategory, label: 'Arcade Games' },
             { id: 'multiplayer' as GameCategory, label: 'Multiplayer' },
           ].map(cat => (
             <button
@@ -200,9 +250,13 @@ export const GamesList: React.FC<GamesListProps> = ({
                 <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-500/40 text-[10px] font-bold text-amber-300 uppercase">
                   {game.categoryLabel}
                 </span>
-                {game.isMultiplayerCapable && (
+                {game.isMultiplayerCapable ? (
                   <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300 uppercase">
                     Live Rooms
+                  </span>
+                ) : (
+                  <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-slate-900/85 border border-cyan-500/40 text-[10px] font-bold text-cyan-300 uppercase">
+                    Single-Player
                   </span>
                 )}
               </div>

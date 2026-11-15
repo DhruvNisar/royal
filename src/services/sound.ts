@@ -342,6 +342,257 @@ class CasinoSoundEngine {
     osc.stop(now + 0.26);
   }
 
+  // --- Plinko Synthesized SFX ---
+  public playPlinkoDrop() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(640, now);
+    osc.frequency.exponentialRampToValueAtTime(280, now + 0.08);
+
+    gain.gain.setValueAtTime(0.11 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.1);
+  }
+
+  public playPlinkoBounce(rowIndex: number = 0, totalRows: number = 12) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    const ratio = totalRows > 0 ? rowIndex / totalRows : 0.5;
+    const baseFreq = 980 + ratio * 680;
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(baseFreq, now);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.72, now + 0.035);
+
+    gain.gain.setValueAtTime(0.075 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.045);
+  }
+
+  public playPlinkoLand(isProfit: boolean) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = isProfit ? 'triangle' : 'sine';
+    osc.frequency.setValueAtTime(isProfit ? 740 : 280, now);
+    osc.frequency.exponentialRampToValueAtTime(isProfit ? 1120 : 190, now + 0.12);
+
+    gain.gain.setValueAtTime((isProfit ? 0.16 : 0.1) * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.15);
+  }
+
+  // --- Crash Synthesized SFX ---
+  public playCrashLaunch() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(520, now + 0.25);
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(900, now);
+
+    gain.gain.setValueAtTime(0.11 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+
+  public playCrashTick(multiplier: number) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    const freq = Math.min(1800, 420 + Math.log2(Math.max(1, multiplier)) * 180);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+
+    gain.gain.setValueAtTime(0.035 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.035);
+  }
+
+  public playCrashCashOut() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const notes = [659.25, 880, 1174.66];
+    notes.forEach((freq, idx) => {
+      setTimeout(() => {
+        if (!this.ctx || !this.settings.sfxEnabled) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.15 * this.settings.masterVolume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      }, idx * 55);
+    });
+  }
+
+  public playCrashExplosion() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+
+    // Low boom oscillator
+    const osc = this.ctx.createOscillator();
+    const oscGain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(38, now + 0.38);
+
+    oscGain.gain.setValueAtTime(0.22 * this.settings.masterVolume, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+    osc.connect(oscGain);
+    oscGain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.42);
+
+    // Filtered noise burst
+    const bufferSize = Math.floor(this.ctx.sampleRate * 0.3);
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(850, now);
+    filter.frequency.exponentialRampToValueAtTime(120, now + 0.3);
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.18 * this.settings.masterVolume, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+    noise.start(now);
+  }
+
+  // --- Royal Mines Synthesized SFX ---
+  public playMinesTileClick() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(310, now + 0.035);
+
+    gain.gain.setValueAtTime(0.07 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.045);
+  }
+
+  public playMinesDiamond(revealCount: number = 1) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const semitoneBoost = Math.min(14, Math.max(0, revealCount - 1));
+    const baseFreq = 660 * Math.pow(2, semitoneBoost / 12);
+
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc1.type = 'triangle';
+    osc2.type = 'sine';
+
+    osc1.frequency.setValueAtTime(baseFreq, now);
+    osc1.frequency.exponentialRampToValueAtTime(baseFreq * 1.25, now + 0.12);
+
+    osc2.frequency.setValueAtTime(baseFreq * 1.5, now + 0.02);
+    osc2.frequency.exponentialRampToValueAtTime(baseFreq * 2, now + 0.16);
+
+    gain.gain.setValueAtTime(0.14 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now + 0.02);
+    osc1.stop(now + 0.19);
+    osc2.stop(now + 0.19);
+  }
+
+  public playMinesExplosion() {
+    this.playCrashExplosion();
+  }
+
+  public playMinesCashOut() {
+    this.playCrashCashOut();
+  }
+
   // Lounge Ambient Chord Drone
   private startAmbientMusic() {
     if (this.ambientInterval) return;

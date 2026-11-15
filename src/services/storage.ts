@@ -160,6 +160,46 @@ const INITIAL_ACHIEVEMENTS: Achievement[] = [
     target: 1,
     completed: false,
   },
+  {
+    id: 'mines_first_diamond',
+    title: 'First Diamond',
+    description: 'Reveal your first safe diamond tile in Royal Mines',
+    rewardCoins: 300,
+    iconName: 'Gem',
+    progress: 0,
+    target: 1,
+    completed: false,
+  },
+  {
+    id: 'mines_diamond_hunter',
+    title: 'Diamond Hunter',
+    description: 'Reveal 100 safe diamond tiles in total in Royal Mines',
+    rewardCoins: 1500,
+    iconName: 'Gem',
+    progress: 0,
+    target: 100,
+    completed: false,
+  },
+  {
+    id: 'mines_master',
+    title: 'Mines Master',
+    description: 'Complete 50 rounds of Royal Mines',
+    rewardCoins: 2500,
+    iconName: 'Crown',
+    progress: 0,
+    target: 50,
+    completed: false,
+  },
+  {
+    id: 'mines_lucky_escape',
+    title: 'Lucky Escape',
+    description: 'Successfully cash out after revealing 5 or more safe diamonds in Royal Mines',
+    rewardCoins: 1000,
+    iconName: 'ShieldCheck',
+    progress: 0,
+    target: 1,
+    completed: false,
+  },
 ];
 
 const INITIAL_QUESTS: DailyQuest[] = [
@@ -449,7 +489,19 @@ class StorageManager {
   public getAchievements(): Achievement[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.ACHIEVEMENTS);
-      if (data) return JSON.parse(data);
+      if (data) {
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed)) {
+          const existingIds = new Set(parsed.map((a: Achievement) => a.id));
+          const missing = INITIAL_ACHIEVEMENTS.filter(a => !existingIds.has(a.id));
+          if (missing.length > 0) {
+            const merged = [...parsed, ...missing];
+            localStorage.setItem(STORAGE_KEYS.ACHIEVEMENTS, JSON.stringify(merged));
+            return merged;
+          }
+          return parsed;
+        }
+      }
     } catch (e) {
       console.warn('Error reading achievements', e);
     }
@@ -482,6 +534,14 @@ class StorageManager {
     }
 
     return achievements[achIndex];
+  }
+
+  public incrementAchievementProgress(id: string, delta: number = 1): Achievement | null {
+    if (delta <= 0) return null;
+    const achievements = this.getAchievements();
+    const existing = achievements.find(a => a.id === id);
+    if (!existing || existing.completed) return existing ?? null;
+    return this.updateAchievementProgress(id, existing.progress + delta);
   }
 
   // --- Daily Quests ---

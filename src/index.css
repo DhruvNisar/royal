@@ -176,3 +176,50 @@ body {
 .animate-fly-right {
   animation: flyToPotRight 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Royal Mines Lightweight Tile Reveal Keyframes */
+@keyframes minesDiamondPop {
+  0% {
+    transform: scale(0.76);
+    opacity: 0.4;
+  }
+  70% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes minesBombShake {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+  20% {
+    transform: translateX(-4px) scale(1.04);
+  }
+  45% {
+    transform: translateX(4px) scale(1.04);
+  }
+  70% {
+    transform: translateX(-2px) scale(1.02);
+  }
+}
+
+.animate-mines-diamond {
+  animation: minesDiamondPop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-mines-bomb {
+  animation: minesBombShake 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-mines-diamond,
+  .animate-mines-bomb {
+    animation: none;
+  }
+}
+
