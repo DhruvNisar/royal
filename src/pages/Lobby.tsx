@@ -3,6 +3,14 @@ import { UserProfile, GameId, DailyQuest } from '../types';
 import { soundManager } from '../services/sound';
 import { storageManager } from '../services/storage';
 import {
+  casinoHeroLoungeImg,
+  gameBlackjackTableImg,
+  gamePokerTableImg,
+  gameRouletteWheelImg,
+  gameSlotsNeonImg,
+  gameTeenPattiTableImg,
+} from '../assets/images';
+import {
   Sparkles,
   Trophy,
   Shield,
@@ -50,7 +58,7 @@ export const Lobby: React.FC<LobbyProps> = ({
       category: 'Card Game',
       minBet: '10 coins',
       payout: 'Natural 21',
-      image: '/src/assets/images/game_blackjack_table_1794140902538.jpg',
+      image: gameBlackjackTableImg,
       badge: 'Popular',
     },
     {
@@ -60,7 +68,7 @@ export const Lobby: React.FC<LobbyProps> = ({
       category: 'Table Game',
       minBet: '10 coins',
       payout: 'Single Zero',
-      image: '/src/assets/images/game_roulette_wheel_1794140902807.jpg',
+      image: gameRouletteWheelImg,
       badge: 'Hot Table',
     },
     {
@@ -70,7 +78,7 @@ export const Lobby: React.FC<LobbyProps> = ({
       category: 'Poker Room',
       minBet: '20 coins',
       payout: 'Pot Based',
-      image: '/src/assets/images/game_poker_table_1794140903791.jpg',
+      image: gamePokerTableImg,
       badge: 'Multiplayer',
     },
     {
@@ -80,7 +88,7 @@ export const Lobby: React.FC<LobbyProps> = ({
       category: 'Card Game',
       minBet: '20 coins',
       payout: 'Pot Limit',
-      image: '/src/assets/images/game_teen_patti_table_1794143569592.jpg',
+      image: gameTeenPattiTableImg,
       badge: 'Royal Table',
     },
     {
@@ -90,7 +98,7 @@ export const Lobby: React.FC<LobbyProps> = ({
       category: 'Slots Arena',
       minBet: '5 coins',
       payout: 'Up to 1,000x',
-      image: '/src/assets/images/game_slots_neon_1794140903236.jpg',
+      image: gameSlotsNeonImg,
       badge: 'Jackpot',
     },
   ];
@@ -110,10 +118,9 @@ export const Lobby: React.FC<LobbyProps> = ({
         <div className="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-2xl bg-[#0f1118]">
           <div className="absolute inset-0 z-0">
             <img
-              src="/src/assets/images/casino_hero_lounge_1794140902778.jpg"
+              src={casinoHeroLoungeImg}
               alt="Royal Ace Casino Lounge"
               className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity filter brightness-90"
-              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#08090d] via-[#08090d]/70 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#08090d] via-[#08090d]/60 to-transparent" />
@@ -227,7 +234,6 @@ export const Lobby: React.FC<LobbyProps> = ({
                     src={game.image}
                     alt={game.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#12141c] via-transparent to-transparent" />
                   <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-amber-500/40 text-[10px] font-bold text-amber-300 uppercase tracking-wide">

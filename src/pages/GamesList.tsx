@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import { GameId, GameCategory } from '../types';
 import { soundManager } from '../services/sound';
 import { Search, ArrowRight, Dices, Layers, Shield } from 'lucide-react';
+import {
+  casinoHeroLoungeImg,
+  gameBlackjackTableImg,
+  gamePokerTableImg,
+  gameRouletteWheelImg,
+  gameSlotsNeonImg,
+  gameTeenPattiTableImg,
+} from '../assets/images';
 
 interface GamesListProps {
   onSelectGame: (gameId: GameId) => void;
@@ -31,7 +39,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 10,
     maxBet: 5000,
     rulesHighlight: 'Natural 21 bonus · Dealer stands on 17',
-    image: '/src/assets/images/game_blackjack_table_1794140902538.jpg',
+    image: gameBlackjackTableImg,
     isMultiplayerCapable: true,
   },
   {
@@ -43,7 +51,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 10,
     maxBet: 10000,
     rulesHighlight: 'European Single 0 · Inside & Outside wagers',
-    image: '/src/assets/images/game_roulette_wheel_1794140902807.jpg',
+    image: gameRouletteWheelImg,
   },
   {
     id: 'poker',
@@ -54,7 +62,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 20,
     maxBet: 10000,
     rulesHighlight: 'Full 5-Card Hand Evaluation · Solo & Multiplayer Rooms',
-    image: '/src/assets/images/game_poker_table_1794140903791.jpg',
+    image: gamePokerTableImg,
     isMultiplayerCapable: true,
   },
   {
@@ -66,7 +74,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 20,
     maxBet: 10000,
     rulesHighlight: 'Trail, Pure Sequence & Color · Blind (1x) vs Chaal (2x)',
-    image: '/src/assets/images/game_teen_patti_table_1794143569592.jpg',
+    image: gameTeenPattiTableImg,
     isMultiplayerCapable: true,
   },
   {
@@ -78,7 +86,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 25,
     maxBet: 15000,
     rulesHighlight: 'Natural 8/9 wins · Banker, Player & Tie bets',
-    image: '/src/assets/images/game_blackjack_table_1794140902538.jpg',
+    image: gameBlackjackTableImg,
   },
   {
     id: 'dice',
@@ -89,7 +97,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 10,
     maxBet: 5000,
     rulesHighlight: 'Multipliers up to 30.0x on Snake Eyes (2) and 12',
-    image: '/src/assets/images/casino_hero_lounge_1794140902778.jpg',
+    image: casinoHeroLoungeImg,
   },
   {
     id: 'slots',
@@ -100,7 +108,7 @@ const ALL_GAMES: GameCardItem[] = [
     minBet: 5,
     maxBet: 1000,
     rulesHighlight: 'Scatter Free Spins · 20 Active Paylines · Wild Crowns',
-    image: '/src/assets/images/game_slots_neon_1794140903236.jpg',
+    image: gameSlotsNeonImg,
   },
 ];
 
@@ -187,7 +195,6 @@ export const GamesList: React.FC<GamesListProps> = ({
                   src={game.image}
                   alt={game.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#12141c] via-transparent to-transparent" />
                 <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-500/40 text-[10px] font-bold text-amber-300 uppercase">
