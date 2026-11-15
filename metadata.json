@@ -1,0 +1,6 @@
+{
+  "name": "ROYAL ACE – Premium Virtual Casino",
+  "description": "A luxurious Las Vegas virtual casino featuring Blackjack 21, European Roulette, Texas Hold'em Poker, Baccarat, Dice Arena, and 5-Reel Slots. Play solo against AI or in real-time multiplayer with virtual chips.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

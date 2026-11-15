@@ -1,0 +1,178 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-gold-300: #f7df8b;
+  --color-gold-400: #eec852;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #aa841c;
+  --color-felt-dark: #072517;
+  --color-felt-green: #0f4329;
+  --color-felt-light: #165b38;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #08090c;
+  color: #f1f5f9;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Custom Casino Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0f14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2e39;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #474f61;
+}
+
+/* Gold Metallic Text Shimmer */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #fff3c4 0%, #eec852 35%, #b58d24 70%, #f7df8b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(135deg, #d4af37, #7a5e18, #d4af37) 1;
+}
+
+/* Casino Felt Surface Texture */
+.casino-felt-surface {
+  background: radial-gradient(circle at 50% 30%, #165b38 0%, #0e3f26 50%, #082315 100%);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
+}
+
+.casino-mahogany-trim {
+  background: linear-gradient(180deg, #3d1b11 0%, #200d07 100%);
+  border-color: #57291a;
+}
+
+/* Slot Reel Rolling & Stopping Keyframes */
+@keyframes reelRoll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes reelBounce {
+  0% {
+    transform: translateY(-24px);
+  }
+  60% {
+    transform: translateY(8px);
+  }
+  85% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-reel-rolling {
+  animation: reelRoll 0.28s linear infinite;
+  will-change: transform;
+}
+
+.animate-reel-stop {
+  animation: reelBounce 0.38s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  will-change: transform;
+}
+
+/* Teen Patti & Casino Pot Flying Money Keyframes */
+@keyframes flyToPotTop {
+  0% {
+    transform: translate(-50%, 0) scale(1.15);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 115px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes flyToPotBottom {
+  0% {
+    transform: translate(-50%, 0) scale(1.15);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -115px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes flyToPotLeft {
+  0% {
+    transform: translate(0, -50%) scale(1.15);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(125px, -50%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes flyToPotRight {
+  0% {
+    transform: translate(0, -50%) scale(1.15);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-125px, -50%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.animate-fly-top {
+  animation: flyToPotTop 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fly-bottom {
+  animation: flyToPotBottom 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fly-left {
+  animation: flyToPotLeft 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fly-right {
+  animation: flyToPotRight 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

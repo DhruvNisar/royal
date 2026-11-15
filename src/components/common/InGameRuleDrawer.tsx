@@ -1,0 +1,240 @@
+import React from 'react';
+import { X, BookOpen, CheckCircle, Shield, Award, Sparkles, ChevronRight } from 'lucide-react';
+import { GameId } from '../../types';
+import { soundManager } from '../../services/sound';
+
+interface InGameRuleDrawerProps {
+  gameId: GameId;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  const handleClose = () => {
+    soundManager.playButtonClick();
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="w-full max-w-2xl bg-[#11131a] border border-amber-500/40 rounded-3xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden text-slate-100">
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-[#161823]">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-amber-400" />
+            </div>
+            <div>
+              <h2 className="font-serif font-bold text-base sm:text-lg text-slate-100">
+                {gameId === 'teen_patti' && 'Teen Patti Royal – Game Rules & Strategy'}
+                {gameId === 'blackjack' && 'Blackjack 21 – Table Rules & Payouts'}
+                {gameId === 'roulette' && 'European Roulette – Betting Guide'}
+                {gameId === 'poker' && "Texas Hold'em Poker – Rules & Hand Ranks"}
+                {gameId === 'baccarat' && 'VIP Baccarat – Punto Banco Rules'}
+                {gameId === 'dice' && 'Dice Arena – Prediction Guide'}
+                {gameId === 'slots' && 'Royal Ace Slots – Paytable & Bonus Guide'}
+              </h2>
+              <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Rules Body */}
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+          {/* TEEN PATTI RULES */}
+          {gameId === 'teen_patti' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Hold the best 3-card hand according to Teen Patti rankings, or bluff your opponents into packing (folding) before the final showdown.
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-serif font-bold text-amber-300 text-sm uppercase tracking-wide">
+                  1. Blind vs. Seen (Chaal) Mechanics
+                </h3>
+                <ul className="space-y-1.5 list-disc list-inside text-slate-300">
+                  <li><strong className="text-slate-100">Boot Amount:</strong> Every seated player contributes the initial boot into the center pot.</li>
+                  <li><strong className="text-slate-100">Blind Player:</strong> Bets without seeing cards. Wagers the current stake amount. Maximum 4 blind turns per player.</li>
+                  <li><strong className="text-slate-100">See Cards:</strong> Click anytime on your turn to inspect your hand. Once seen, you play as a Seen player.</li>
+                  <li><strong className="text-slate-100">Seen Player (Chaal):</strong> Must bet at least double the blind stake amount.</li>
+                  <li><strong className="text-slate-100">Raise:</strong> A player can double the active stake to put pressure on remaining competitors.</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-serif font-bold text-amber-300 text-sm uppercase tracking-wide">
+                  2. Table Limits & Special Actions
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <div className="font-semibold text-amber-400">Pot Limit Cap</div>
+                    <p className="text-[11px] text-slate-400">
+                      When the center pot reaches the designated table cap, a mandatory Showdown triggers automatically between all active players.
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <div className="font-semibold text-amber-400">Sideshow & Show</div>
+                    <p className="text-[11px] text-slate-400">
+                      Sideshow allows comparing cards secretly with the previous Seen player. When 2 players remain, either can request a final Show!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-serif font-bold text-amber-300 text-sm uppercase tracking-wide">
+                  3. Official Teen Patti Hand Rankings (Highest to Lowest)
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-amber-500/20 space-y-1">
+                    <span className="font-bold text-amber-400">1. Trail / Trio / Set:</span>
+                    <p className="text-[11px] text-slate-300">3 cards of identical rank. AAA is the highest trail, 222 is the lowest trail.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-amber-500/20 space-y-1">
+                    <span className="font-bold text-amber-400">2. Pure Sequence (Pakki Round):</span>
+                    <p className="text-[11px] text-slate-300">Straight Flush: 3 consecutive cards of the SAME suit. Order: A-K-Q (highest) &gt; A-2-3 (second highest) &gt; K-Q-J down to 4-3-2.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-amber-500/20 space-y-1">
+                    <span className="font-bold text-amber-400">3. Sequence (Normal Run):</span>
+                    <p className="text-[11px] text-slate-300">Straight: 3 consecutive cards of mixed suits. Order: A-K-Q &gt; A-2-3 &gt; K-Q-J down to 4-3-2.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-purple-950/30 border border-purple-500/40 space-y-1">
+                    <span className="font-bold text-purple-300">4. Color / Flush / Rung:</span>
+                    <p className="text-[11px] text-slate-200">
+                      <strong>3 cards of the exact SAME SUIT</strong> (♠, ♥, ♦, or ♣). <em>Strictly beats all Pairs and High Cards</em>, regardless of card values! Higher card in flush breaks flush ties.
+                    </p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-amber-500/20 space-y-1">
+                    <span className="font-bold text-amber-400">5. Pair / Double:</span>
+                    <p className="text-[11px] text-slate-300">Two cards of identical rank + 1 kicker. Higher pair rank wins; tied pairs are decided by kicker.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-amber-500/20 space-y-1">
+                    <span className="font-bold text-amber-400">6. High Card:</span>
+                    <p className="text-[11px] text-slate-300">No matching combo. Evaluated by highest card, then second, then third.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 text-[11px] space-y-1">
+                <span className="font-bold text-amber-300">Official Tie-Breaker Rule:</span>
+                <p className="text-slate-300">
+                  Suits have equal ranking in Teen Patti. If two active hands have completely identical card ranks during Showdown or Sideshow, <strong>the player who requested and paid for the Show/Sideshow loses the tie</strong>!
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* BLACKJACK RULES */}
+          {gameId === 'blackjack' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Build a hand totaling as close to 21 as possible without busting (going over 21), and beat the dealer’s hand total.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Card Values:</strong> Aces count as 1 or 11. Face cards (K, Q, J) count as 10. Number cards count at face value.</li>
+                <li><strong className="text-slate-100">Hit:</strong> Take another card to increase hand total.</li>
+                <li><strong className="text-slate-100">Stand:</strong> Hold your current total and end your turn.</li>
+                <li><strong className="text-slate-100">Double Down:</strong> Double your wager and receive exactly one final card.</li>
+                <li><strong className="text-slate-100">Split:</strong> Split any pair of identical ranks into two separate hands with equal bets.</li>
+                <li><strong className="text-slate-100">Insurance:</strong> Offered when the dealer's face-up card is an Ace.</li>
+                <li><strong className="text-slate-100">Dealer Rules:</strong> Dealer must hit until reaching at least 17, and stand on 17 or higher.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* ROULETTE RULES */}
+          {gameId === 'roulette' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Predict which numbered pocket the spinning ball will come to rest in on the European 37-pocket wheel (0 to 36).
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Straight Bet:</strong> Bet directly on any single number (0 through 36). Highest payout!</li>
+                <li><strong className="text-slate-100">Outside Bets:</strong> Red or Black, Even or Odd, Low (1–18) or High (19–36).</li>
+                <li><strong className="text-slate-100">Dozens & Columns:</strong> 1st 12 (1–12), 2nd 12 (13–24), 3rd 12 (25–36), or any of the 3 vertical columns.</li>
+                <li><strong className="text-slate-100">Zero (0):</strong> The green pocket belongs exclusively to the house for outside bets.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* POKER RULES */}
+          {gameId === 'poker' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Form the best 5-card poker hand using your 2 private hole cards and the 5 shared community cards.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Rounds:</strong> Pre-flop (2 private cards), Flop (3 community cards), Turn (4th card), River (5th card), Showdown.</li>
+                <li><strong className="text-slate-100">Actions:</strong> Check, Call, Raise, or Fold at each betting round.</li>
+                <li><strong className="text-slate-100">Rankings:</strong> Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, One Pair, High Card.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* BACCARAT RULES */}
+          {gameId === 'baccarat' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Wager on whether the Player hand or Banker hand will finish with a total closest to 9, or if they will Tie.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Card Scoring:</strong> Aces count as 1. Tens and face cards count as 0. 2–9 count at face value. Only the last digit of the sum counts (e.g., 7 + 8 = 15 &rarr; 5).</li>
+                <li><strong className="text-slate-100">Natural:</strong> An initial total of 8 or 9 on 2 cards is a Natural win.</li>
+                <li><strong className="text-slate-100">Third-Card Rules:</strong> Automated strictly according to official international tableau rules.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* DICE ARENA RULES */}
+          {gameId === 'dice' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Roll two 6-sided dice and correctly predict the combined outcome or special roll combinations.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Under 7 / Over 7:</strong> Predict whether total is 2–6 (Under) or 8–12 (Over).</li>
+                <li><strong className="text-slate-100">Lucky 7:</strong> Hits when combined roll is exactly 7.</li>
+                <li><strong className="text-slate-100">Any Double:</strong> Hits when both dice show the exact same number (1-1, 2-2, etc.).</li>
+                <li><strong className="text-slate-100">Exact Sums:</strong> Wager on exact totals from 2 to 12. Snake Eyes (2) and Boxcars (12) have high payouts!</li>
+              </ul>
+            </div>
+          )}
+
+          {/* SLOTS RULES */}
+          {gameId === 'slots' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Spin the 5 video reels and align 3, 4, or 5 matching symbols across the 20 active winning paylines.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Royal Crown (Wild):</strong> Substitutes for any regular symbol to complete winning lines.</li>
+                <li><strong className="text-slate-100">Gold Scatter:</strong> 3 or more Scatters anywhere on the reels trigger 10 Free Spins with an active 2x Multiplier.</li>
+                <li><strong className="text-slate-100">Rolling Reels:</strong> Click spin to trigger smooth rolling reel animation that stops consecutively across each reel.</li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Drawer Footer */}
+        <div className="p-4 border-t border-slate-800 bg-[#161823] flex justify-end">
+          <button
+            type="button"
+            onClick={handleClose}
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-slate-950 font-serif font-black text-xs uppercase tracking-wider transition-transform active:scale-95"
+          >
+            Back to Game Table
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
