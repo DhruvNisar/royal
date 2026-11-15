@@ -13,6 +13,7 @@ import {
   gameCrashRocketImg,
   gameMinesVaultImg,
   gameKenoBoardImg,
+  gameHiLoTableImg,
 } from '../assets/images';
 
 interface GamesListProps {
@@ -161,6 +162,17 @@ const ALL_GAMES: GameCardItem[] = [
     maxBet: 5000,
     rulesHighlight: '80 Numbers · 20 Draws · Hypergeometric 97% RTP · Auto Play',
     image: gameKenoBoardImg,
+  },
+  {
+    id: 'hilo',
+    title: 'Royal Hi-Lo',
+    category: 'cards',
+    categoryLabel: 'Card Game',
+    description: 'Predict whether the next card dealt will be Higher or Lower. Real-time dynamic odds, Aces high, same-rank push, and instant cash out.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '52-Card Deck · Real-Time Odds · Aces High · 97% RTP',
+    image: gameHiLoTableImg,
   },
 ];
 

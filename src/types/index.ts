@@ -11,7 +11,7 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo';
 
 export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
@@ -346,4 +346,61 @@ export interface KenoStats {
   bestWin: number;
   winRate: number;
 }
+
+/* Royal Hi-Lo */
+export type HiLoSuit = 'hearts' | 'diamonds' | 'clubs' | 'spades';
+export type HiLoRank = 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
+export type HiLoRankSymbol = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'J' | 'Q' | 'K' | 'A';
+
+export interface HiLoCard {
+  id: string; // e.g. "hearts_14"
+  suit: HiLoSuit;
+  rank: HiLoRank;
+  symbol: HiLoRankSymbol;
+  color: 'red' | 'black';
+}
+
+export type HiLoPrediction = 'HIGHER' | 'LOWER';
+export type HiLoOutcome = 'WIN' | 'LOSS' | 'PUSH';
+
+export interface HiLoStepResult {
+  stepIndex: number;
+  prevCard: HiLoCard;
+  prediction: HiLoPrediction;
+  revealedCard: HiLoCard;
+  outcome: HiLoOutcome;
+  stepMultiplier: number;
+  probability: number;
+}
+
+export type HiLoGameState = 'BETTING' | 'PREDICTING' | 'REVEALING' | 'ROUND_WON' | 'ROUND_LOST' | 'CASHED_OUT';
+
+export interface HiLoRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  initialCard: HiLoCard;
+  finalCard: HiLoCard;
+  cardsRevealed: HiLoCard[];
+  steps: HiLoStepResult[];
+  correctStreak: number;
+  finalMultiplier: number;
+  payout: number;
+  net: number;
+  outcome: 'CASHED_OUT' | 'LOST' | 'PUSH';
+}
+
+export interface HiLoStats {
+  roundsPlayed: number;
+  totalWagered: number;
+  totalReturned: number;
+  netProfit: number;
+  winningRounds: number;
+  losingRounds: number;
+  pushesCount: number;
+  highestMultiplier: number;
+  longestStreak: number;
+  winRate: number;
+}
+
 

@@ -723,6 +723,76 @@ class CasinoSoundEngine {
     osc.stop(now + 0.07);
   }
 
+  // --- Royal Hi-Lo Synthesized SFX ---
+  public playHiLoCardFlip() {
+    this.playCardDeal();
+  }
+
+  public playHiLoCorrect(streak: number = 1) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const semitone = Math.min(18, Math.max(0, streak * 2));
+    const baseFreq = 523.25 * Math.pow(2, semitone / 12); // C5 climbing
+
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc1.type = 'triangle';
+    osc2.type = 'sine';
+
+    osc1.frequency.setValueAtTime(baseFreq, now);
+    osc1.frequency.exponentialRampToValueAtTime(baseFreq * 1.25, now + 0.12);
+
+    osc2.frequency.setValueAtTime(baseFreq * 1.5, now + 0.02);
+    osc2.frequency.exponentialRampToValueAtTime(baseFreq * 2.0, now + 0.16);
+
+    gain.gain.setValueAtTime(0.14 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now + 0.02);
+    osc1.stop(now + 0.19);
+    osc2.stop(now + 0.19);
+  }
+
+  public playHiLoPush() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    // Dual neutral tone
+    [440, 440].forEach((freq, idx) => {
+      setTimeout(() => {
+        if (!this.ctx || !this.settings.sfxEnabled) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.08 * this.settings.masterVolume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.09);
+      }, idx * 70);
+    });
+  }
+
+  public playHiLoCashOut() {
+    this.playCrashCashOut();
+  }
+
   // Lounge Ambient Chord Drone
   private startAmbientMusic() {
     if (this.ambientInterval) return;

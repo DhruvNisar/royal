@@ -35,6 +35,7 @@ import { PlinkoGame } from './games/plinko/PlinkoGame';
 import { CrashGame } from './games/crash/CrashGame';
 import { MinesGame } from './games/mines/MinesGame';
 import { KenoGame } from './games/keno/KenoGame';
+import { HiLoGame } from './games/hilo/HiLoGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -343,6 +344,18 @@ export default function App() {
             onUpdateProfile={refreshProfile}
             onOpenRules={() => {
               setSelectedGameForRules('keno');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_hilo' && (
+          <HiLoGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('hilo');
               setIsRulesOpen(true);
             }}
             onBackToLobby={handleExitGame}

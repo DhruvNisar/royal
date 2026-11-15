@@ -13,6 +13,7 @@ import {
   gameCrashRocketImg,
   gameMinesVaultImg,
   gameKenoBoardImg,
+  gameHiLoTableImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -144,6 +145,16 @@ export const Lobby: React.FC<LobbyProps> = ({
       payout: 'Up to 60,000x',
       image: gameKenoBoardImg,
       badge: 'New Arcade',
+    },
+    {
+      id: 'hilo' as GameId,
+      title: 'Royal Hi-Lo',
+      subtitle: 'Aces High · Dynamic Multipliers',
+      category: 'Card Game',
+      minBet: '10 coins',
+      payout: 'Streak Multipliers',
+      image: gameHiLoTableImg,
+      badge: 'New Card Game',
     },
   ];
 

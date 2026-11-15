@@ -39,6 +39,7 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'crash' && 'Rocket Crash – Flight & Cash-Out Guide'}
                 {gameId === 'mines' && 'Royal Mines – Vault Grid & Multiplier Guide'}
                 {gameId === 'keno' && 'Royal Keno – Numbers, Hits & Hypergeometric Paytable Guide'}
+                {gameId === 'hilo' && 'Royal Hi-Lo – Rules, Card Ranks & Dynamic Odds Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -289,6 +290,25 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">Calibrated ~97% RTP:</strong> Every spot selection (1 through 10) provides ~97.00% theoretical return to player. High multipliers reach up to 60,000x for a 10-of-10 catch!</li>
                 <li><strong className="text-slate-100">Auto Play:</strong> Run automated consecutive draws with automatic stop conditions on profit targets or bankroll loss thresholds.</li>
                 <li><strong className="text-slate-100">Virtual Currency:</strong> All bets, wins, and balances utilize fictional entertainment coins with zero real-money risk.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* HI-LO RULES */}
+          {gameId === 'hilo' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Predict whether the next card dealt will have a Higher or Lower rank than the active reference card. Cash out anytime after a correct prediction!
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Card Rankings:</strong> 2 (lowest) up to Ace (14, highest). 52 unique cards per round shuffled with cryptographic randomness.</li>
+                <li><strong className="text-slate-100">Higher:</strong> Wins if revealed card rank &gt; current card rank.</li>
+                <li><strong className="text-slate-100">Lower:</strong> Wins if revealed card rank &lt; current card rank.</li>
+                <li><strong className="text-cyan-300 font-bold">Push on Equal Rank:</strong> If the next card has the EXACT same rank, the round pushes! Multiplier does not change, and you continue from the new card.</li>
+                <li><strong className="text-slate-100">Dynamic Multipliers (97% RTP):</strong> Calculated as <span className="font-mono text-emerald-400">0.97 / P(Outcome)</span> based on the actual composition of remaining cards.</li>
+                <li><strong className="text-slate-100">Streak Compounding:</strong> Multipliers compound across consecutive wins: <span className="font-mono text-slate-200">Potential Payout = Bet × Total Multiplier</span>.</li>
+                <li><strong className="text-slate-100">Cash Out:</strong> Available after every correct prediction. Collect your multiplied payout instantly.</li>
+                <li><strong className="text-slate-100">Incorrect Guess:</strong> Ends the round immediately and forfeits the initial wager.</li>
               </ul>
             </div>
           )}
