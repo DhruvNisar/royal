@@ -38,6 +38,7 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'plinko' && 'Royal Plinko – Peg Board & Risk Guide'}
                 {gameId === 'crash' && 'Rocket Crash – Flight & Cash-Out Guide'}
                 {gameId === 'mines' && 'Royal Mines – Vault Grid & Multiplier Guide'}
+                {gameId === 'keno' && 'Royal Keno – Numbers, Hits & Hypergeometric Paytable Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -271,6 +272,23 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">Cash Out or Full Clear:</strong> Cash out after 1 or more diamonds for <span className="font-mono text-slate-200">Bet × Multiplier</span> rounded to whole coins. Revealing every safe tile automatically awards the maximum payout.</li>
                 <li><strong className="text-slate-100">Mine Hit:</strong> Uncovering a mine ends the round immediately, reveals all remaining mines, and forfeits the stake.</li>
                 <li><strong className="text-slate-100">Auto Play &amp; Local RNG:</strong> Optionally configure automated rounds with safe pick counts and profit/loss limits. Mine positions are fixed before the first click using <span className="font-mono text-slate-200">crypto.getRandomValues</span> with fictional coins only.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* KENO RULES */}
+          {gameId === 'keno' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Select 1 to 10 numbers on the 80-number board. The royal machine draws 20 unique numbers at random. Match your chosen numbers to hit payout tiers!
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Number Selection (1–10 spots):</strong> Click any numbers on the 1–80 card to toggle selection, or use Quick Pick buttons (Pick 3, 5, 8, 10).</li>
+                <li><strong className="text-slate-100">20 Ball Draw:</strong> 20 unique balls are drawn sequentially from the 80-ball cage using cryptographic Fisher-Yates randomness (<span className="font-mono text-slate-200">crypto.getRandomValues</span>).</li>
+                <li><strong className="text-slate-100">Hypergeometric Distribution:</strong> True mathematical probabilities: <span className="font-mono text-slate-200">P(H) = C(S, H) × C(80−S, 20−H) / C(80, 20)</span>.</li>
+                <li><strong className="text-slate-100">Calibrated ~97% RTP:</strong> Every spot selection (1 through 10) provides ~97.00% theoretical return to player. High multipliers reach up to 60,000x for a 10-of-10 catch!</li>
+                <li><strong className="text-slate-100">Auto Play:</strong> Run automated consecutive draws with automatic stop conditions on profit targets or bankroll loss thresholds.</li>
+                <li><strong className="text-slate-100">Virtual Currency:</strong> All bets, wins, and balances utilize fictional entertainment coins with zero real-money risk.</li>
               </ul>
             </div>
           )}

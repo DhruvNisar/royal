@@ -12,6 +12,7 @@ import {
   gamePlinkoBoardImg,
   gameCrashRocketImg,
   gameMinesVaultImg,
+  gameKenoBoardImg,
 } from '../assets/images';
 
 interface GamesListProps {
@@ -149,6 +150,17 @@ const ALL_GAMES: GameCardItem[] = [
     maxBet: 5000,
     rulesHighlight: '5×5 Vault Grid · 1–24 Mines · 97% Theoretical RTP',
     image: gameMinesVaultImg,
+  },
+  {
+    id: 'keno',
+    title: 'Royal Keno',
+    category: 'arcade',
+    categoryLabel: 'Arcade Game',
+    description: 'Pick 1 to 10 lucky numbers on an 80-ball board. 20 balls drawn with exact hypergeometric ~97% RTP payouts up to 60,000x.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '80 Numbers · 20 Draws · Hypergeometric 97% RTP · Auto Play',
+    image: gameKenoBoardImg,
   },
 ];
 

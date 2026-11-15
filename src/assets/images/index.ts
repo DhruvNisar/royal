@@ -7,6 +7,7 @@ import gameTeenPattiTableImg from './game_teen_patti_table_1794143569592.jpg';
 import gamePlinkoBoardImg from './game_plinko_board_1794738266584.jpg';
 import gameCrashRocketImg from './game_crash_rocket_1794738266372.jpg';
 import gameMinesVaultImg from './game_mines_vault_1794740654945.jpg';
+import gameKenoBoardImg from './game_keno_board_1794766044891.jpg';
 
 export {
   casinoHeroLoungeImg,
@@ -18,4 +19,5 @@ export {
   gamePlinkoBoardImg,
   gameCrashRocketImg,
   gameMinesVaultImg,
+  gameKenoBoardImg,
 };

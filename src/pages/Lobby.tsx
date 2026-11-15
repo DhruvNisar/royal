@@ -12,6 +12,7 @@ import {
   gamePlinkoBoardImg,
   gameCrashRocketImg,
   gameMinesVaultImg,
+  gameKenoBoardImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -132,6 +133,16 @@ export const Lobby: React.FC<LobbyProps> = ({
       minBet: '10 coins',
       payout: '97% RTP Gems',
       image: gameMinesVaultImg,
+      badge: 'New Arcade',
+    },
+    {
+      id: 'keno' as GameId,
+      title: 'Royal Keno',
+      subtitle: '80 Balls · 20 Draws · 1–10 Spots',
+      category: 'Numbers / Arcade',
+      minBet: '10 coins',
+      payout: 'Up to 60,000x',
+      image: gameKenoBoardImg,
       badge: 'New Arcade',
     },
   ];

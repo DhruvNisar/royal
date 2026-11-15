@@ -11,7 +11,7 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno';
 
 export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
@@ -317,5 +317,33 @@ export interface MinesRoundResult {
   payout: number;
   net: number;
   outcome: 'CASHED_OUT' | 'WON' | 'LOST';
+}
+
+/* Royal Keno */
+export type KenoGameState = 'IDLE' | 'READY' | 'DRAWING' | 'SETTLED' | 'ROUND_OVER';
+
+export interface KenoRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  selectedNumbers: number[];
+  drawnNumbers: number[];
+  matchedNumbers: number[];
+  matchesCount: number;
+  multiplier: number;
+  payout: number;
+  net: number;
+  isWin: boolean;
+}
+
+export interface KenoStats {
+  roundsPlayed: number;
+  totalWagered: number;
+  totalWon: number;
+  netProfit: number;
+  winningRounds: number;
+  losingRounds: number;
+  bestWin: number;
+  winRate: number;
 }
 

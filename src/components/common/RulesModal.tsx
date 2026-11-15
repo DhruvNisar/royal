@@ -33,6 +33,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
     { id: 'plinko', label: 'Royal Plinko' },
     { id: 'crash', label: 'Rocket Crash' },
     { id: 'mines', label: 'Royal Mines' },
+    { id: 'keno', label: 'Royal Keno' },
   ];
 
   return (
@@ -350,6 +351,35 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     <li>• Multiplier: <span className="text-emerald-400 font-bold">0.97 / P(K)</span> (97% theoretical RTP)</li>
                     <li>• Payout = <span className="text-slate-200 font-semibold">Bet × Multiplier(K)</span> rounded to whole coins</li>
                     <li>• Hitting a mine ends the round; Auto Play supports target rounds, picks, and win/loss stops</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'keno' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Keno Rules &amp; Mathematical Model</h3>
+              <p>
+                Royal Keno is a classic casino numbers game played on an 80-number grid. Select between 1 and 10 lucky numbers (spots), then watch the royal drawing machine draw 20 unique numbers at random. Match your selections against the drawn numbers to win lucrative coin payouts!
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Selections &amp; Stakes</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Numbers: <span className="text-slate-200 font-semibold">1 to 80 interactive board</span></li>
+                    <li>• Selections: <span className="text-amber-300 font-bold">Pick 1 to 10 numbers</span> (or Quick Pick)</li>
+                    <li>• Draw: <span className="text-cyan-300 font-bold">20 unique balls</span> revealed per round</li>
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 5,000 virtual coins</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Hypergeometric Paytable &amp; Fairness</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Probability Formula: <span className="font-mono text-slate-200">P(H) = C(S,H)×C(80−S, 20−H) / C(80, 20)</span></li>
+                    <li>• Theoretical RTP: <span className="text-emerald-400 font-bold">~97.00%</span> mathematically calibrated across all spots</li>
+                    <li>• Top Catch: <span className="text-amber-300 font-bold">Up to 60,000x your wager</span> (10/10 hit)</li>
+                    <li>• Local Cryptographic Draw: Generated using <span className="font-mono text-slate-200">crypto.getRandomValues</span> with zero duplicates</li>
                   </ul>
                 </div>
               </div>

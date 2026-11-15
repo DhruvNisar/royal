@@ -34,6 +34,7 @@ import { TeenPattiGame } from './games/teen_patti/TeenPattiGame';
 import { PlinkoGame } from './games/plinko/PlinkoGame';
 import { CrashGame } from './games/crash/CrashGame';
 import { MinesGame } from './games/mines/MinesGame';
+import { KenoGame } from './games/keno/KenoGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -330,6 +331,18 @@ export default function App() {
             onUpdateProfile={refreshProfile}
             onOpenRules={() => {
               setSelectedGameForRules('mines');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_keno' && (
+          <KenoGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('keno');
               setIsRulesOpen(true);
             }}
             onBackToLobby={handleExitGame}

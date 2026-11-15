@@ -593,6 +593,136 @@ class CasinoSoundEngine {
     this.playCrashCashOut();
   }
 
+  // --- Royal Keno Synthesized SFX ---
+  public playKenoNumberToggle(isSelected: boolean) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    const startFreq = isSelected ? 620 : 440;
+    const endFreq = isSelected ? 880 : 330;
+
+    osc.frequency.setValueAtTime(startFreq, now);
+    osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.04);
+
+    gain.gain.setValueAtTime(0.08 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.05);
+  }
+
+  public playKenoQuickPick() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const freqs = [523.25, 659.25, 783.99, 1046.5];
+    freqs.forEach((freq, idx) => {
+      setTimeout(() => {
+        if (!this.ctx || !this.settings.sfxEnabled) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.15, now + 0.05);
+
+        gain.gain.setValueAtTime(0.09 * this.settings.masterVolume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      }, idx * 40);
+    });
+  }
+
+  public playKenoBallDraw(ballIndex: number = 0) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    // Subtle pitch progression through the 20 balls (400Hz up to 700Hz)
+    const baseFreq = 420 + Math.min(20, ballIndex) * 14;
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(baseFreq, now);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.75, now + 0.035);
+
+    gain.gain.setValueAtTime(0.06 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.045);
+  }
+
+  public playKenoMatchHit(matchCount: number = 1) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const semitone = Math.min(16, Math.max(0, matchCount * 2));
+    const baseFreq = 587.33 * Math.pow(2, semitone / 12); // D5-based sparkle
+
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc1.type = 'triangle';
+    osc2.type = 'sine';
+
+    osc1.frequency.setValueAtTime(baseFreq, now);
+    osc1.frequency.exponentialRampToValueAtTime(baseFreq * 1.33, now + 0.14);
+
+    osc2.frequency.setValueAtTime(baseFreq * 1.5, now + 0.02);
+    osc2.frequency.exponentialRampToValueAtTime(baseFreq * 2.0, now + 0.18);
+
+    gain.gain.setValueAtTime(0.14 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now + 0.02);
+    osc1.stop(now + 0.22);
+    osc2.stop(now + 0.22);
+  }
+
+  public playKenoClear() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(580, now);
+    osc.frequency.exponentialRampToValueAtTime(220, now + 0.06);
+
+    gain.gain.setValueAtTime(0.07 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.07);
+  }
+
   // Lounge Ambient Chord Drone
   private startAmbientMusic() {
     if (this.ambientInterval) return;
