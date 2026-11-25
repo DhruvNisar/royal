@@ -11,7 +11,7 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo' | 'horse_racing' | 'bingo' | 'deal_no_deal';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo' | 'horse_racing' | 'bingo' | 'deal_no_deal' | 'treasure_trail' | 'coin_pusher';
 
 export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
@@ -564,6 +564,91 @@ export interface DealNoDealStats {
   dealsRejected: number;
   biggestPayout: number;
   highestMultiplierWon: number;
+}
+
+/* Royal Treasure Trail */
+export type TreasureTrailState =
+  | 'SETUP'
+  | 'CHOOSING_PATH'
+  | 'REVEALING_PATH'
+  | 'STAGE_DECISION'
+  | 'COLLECTING'
+  | 'SETTLED_WIN'
+  | 'SETTLED_LOSS';
+
+export type TreasurePathOutcome = 'safe' | 'trap';
+
+export interface TreasureStagePlan {
+  stageNumber: number; // 1..10
+  title: string;
+  relicName: string;
+  trapName: string;
+  trapPathIndex: 0 | 1 | 2;
+  paths: [TreasurePathOutcome, TreasurePathOutcome, TreasurePathOutcome];
+  multiplier: number; // Full-precision M(stageNumber) = 0.95 / (2/3)^stageNumber
+}
+
+export interface TreasureStageRecord {
+  stageNumber: number;
+  chosenPathIndex: 0 | 1 | 2;
+  outcome: TreasurePathOutcome;
+  trapPathIndex: 0 | 1 | 2;
+}
+
+export interface TreasureTrailRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  stagesCompleted: number;
+  finalMultiplier: number;
+  grossPayout: number;
+  netProfit: number;
+  outcome: 'COLLECTED' | 'MAX_WIN' | 'TRAP_LOSS';
+}
+
+export interface TreasureTrailStats {
+  roundsPlayed: number;
+  totalWagered: number;
+  totalGrossWon: number;
+  totalNetProfit: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  bestStage: number;
+  biggestPayout: number;
+}
+
+/* Royal Coin Pusher */
+export type CoinPusherState = 'READY' | 'DROPPING' | 'SETTLED';
+
+export type CoinPusherOutcomeCategory =
+  | 'NO_PRIZE'
+  | 'SMALL_PRIZE'
+  | 'NORMAL_PRIZE'
+  | 'BIG_PRIZE';
+
+export interface CoinPusherRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  lane: number; // 1..5
+  outcome: CoinPusherOutcomeCategory;
+  outcomeLabel: string;
+  multiplier: number;
+  grossPayout: number;
+  netProfit: number;
+}
+
+export interface CoinPusherStats {
+  dropsPlayed: number;
+  totalWagered: number;
+  totalGrossWon: number;
+  totalNetProfit: number;
+  noPrizeCount: number;
+  smallPrizeCount: number;
+  normalPrizeCount: number;
+  bigPrizeCount: number;
+  biggestPayout: number;
 }
 
 

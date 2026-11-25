@@ -12,6 +12,8 @@ import gameHiLoTableImg from './game_hilo_table_1794769036756.jpg';
 import gameHorseRacingTrackImg from './game_horse_racing_track_1795598711077.jpg';
 import gameBingoHallImg from './game_bingo_hall_1795598711208.jpg';
 import gameDealNoDealStageImg from './game_deal_no_deal_stage_1795600567704.jpg';
+import gameTreasureTrailTempleImg from './game_treasure_trail_temple_1795602794752.jpg';
+import gameCoinPusherArcadeImg from './game_coin_pusher_arcade_1795602799118.jpg';
 
 export {
   casinoHeroLoungeImg,
@@ -28,4 +30,6 @@ export {
   gameHorseRacingTrackImg,
   gameBingoHallImg,
   gameDealNoDealStageImg,
+  gameTreasureTrailTempleImg,
+  gameCoinPusherArcadeImg,
 };

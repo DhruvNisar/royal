@@ -1037,6 +1037,122 @@ class CasinoSoundEngine {
     osc.stop(now + 0.27);
   }
 
+  // --- Royal Treasure Trail Synthesized SFX ---
+  public playTreasureDoorOpen() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+    const now = this.ctx.currentTime;
+    // Stone sliding rumble + metallic latch
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(170, now);
+    osc.frequency.exponentialRampToValueAtTime(95, now + 0.16);
+    gain.gain.setValueAtTime(0.14 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.19);
+  }
+
+  public playTreasureSafe(stageNumber: number = 1) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+    const now = this.ctx.currentTime;
+    const semitone = Math.min(14, Math.max(0, (stageNumber - 1) * 1.5));
+    const base = 523.25 * Math.pow(2, semitone / 12);
+    [base, base * 1.25, base * 1.5].forEach((freq, idx) => {
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      const t = now + idx * 0.055;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.13 * this.settings.masterVolume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.24);
+    });
+  }
+
+  public playTreasureTrap() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(52, now + 0.34);
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(700, now);
+    gain.gain.setValueAtTime(0.2 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.38);
+  }
+
+  public playTreasureCollect() {
+    this.playWin();
+  }
+
+  // --- Royal Coin Pusher Synthesized SFX ---
+  public playCoinPusherDrop() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+    const now = this.ctx.currentTime;
+    [0, 0.14].forEach((offset, i) => {
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(i === 0 ? 1950 : 2450, now + offset);
+      osc.frequency.exponentialRampToValueAtTime(i === 0 ? 1350 : 1700, now + offset + 0.065);
+      gain.gain.setValueAtTime((i === 0 ? 0.13 : 0.1) * this.settings.masterVolume, now + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.08);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + offset);
+      osc.stop(now + offset + 0.09);
+    });
+  }
+
+  public playCoinPusherTrayClink(pitchShift: number = 0) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+    const now = this.ctx.currentTime;
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc1.type = 'triangle';
+    osc2.type = 'sine';
+    const base = 2600 + pitchShift * 140;
+    osc1.frequency.setValueAtTime(base, now);
+    osc1.frequency.exponentialRampToValueAtTime(base * 0.72, now + 0.075);
+    osc2.frequency.setValueAtTime(base * 1.48, now);
+    osc2.frequency.exponentialRampToValueAtTime(base * 1.05, now + 0.065);
+    gain.gain.setValueAtTime(0.11 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 0.09);
+    osc2.stop(now + 0.09);
+  }
+
+  public playCoinPusherBigAvalanche() {
+    this.playBigWin();
+  }
+
   // Lounge Ambient Chord Drone
   private startAmbientMusic() {
     if (this.ambientInterval) return;

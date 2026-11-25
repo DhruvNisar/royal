@@ -17,6 +17,8 @@ import {
   gameHorseRacingTrackImg,
   gameBingoHallImg,
   gameDealNoDealStageImg,
+  gameTreasureTrailTempleImg,
+  gameCoinPusherArcadeImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -189,6 +191,26 @@ export const Lobby: React.FC<LobbyProps> = ({
       image: gameDealNoDealStageImg,
       badge: 'New Show',
     },
+    {
+      id: 'treasure_trail' as GameId,
+      title: 'Royal Treasure Trail',
+      subtitle: '10 Temple Stages · Cash Out Anytime',
+      category: 'Adventure / Arcade',
+      minBet: '10 coins',
+      payout: 'Up to 54.78x',
+      image: gameTreasureTrailTempleImg,
+      badge: 'New Adventure',
+    },
+    {
+      id: 'coin_pusher' as GameId,
+      title: 'Royal Coin Pusher',
+      subtitle: '5 Drop Lanes · Brass Arcade Deck',
+      category: 'Arcade Machine',
+      minBet: '10 coins',
+      payout: 'Up to 2.25x',
+      image: gameCoinPusherArcadeImg,
+      badge: 'New Arcade',
+    },
   ];
 
   return (
@@ -301,7 +323,7 @@ export const Lobby: React.FC<LobbyProps> = ({
               }}
               className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
             >
-              <span>View All 10 Games</span>
+              <span>View All 17 Games</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

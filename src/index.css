@@ -460,6 +460,95 @@ body {
   animation: dndSlamIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Royal Treasure Trail & Royal Coin Pusher Keyframes */
+@keyframes treasureDoorReveal {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.65;
+  }
+  55% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes treasureChestFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes treasureTrapShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px) rotate(-1.5deg);
+  }
+  45% {
+    transform: translateX(5px) rotate(1.5deg);
+  }
+  70% {
+    transform: translateX(-3px) rotate(-0.8deg);
+  }
+}
+
+@keyframes treasureTorchFlicker {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes pusherTrayPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-treasure-reveal {
+  animation: treasureDoorReveal 0.34s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-treasure-float {
+  animation: treasureChestFloat 2.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-treasure-trap {
+  animation: treasureTrapShake 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.animate-treasure-torch {
+  animation: treasureTorchFlicker 2.4s ease-in-out infinite;
+}
+
+.animate-pusher-tray {
+  animation: pusherTrayPulse 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-mines-diamond,
   .animate-mines-bomb,
@@ -476,8 +565,12 @@ body {
   .animate-dnd-phone-ring,
   .animate-dnd-ring-pulse,
   .animate-dnd-eliminate,
-  .animate-dnd-slam {
+  .animate-dnd-slam,
+  .animate-treasure-reveal,
+  .animate-treasure-float,
+  .animate-treasure-trap,
+  .animate-treasure-torch,
+  .animate-pusher-tray {
     animation: none;
   }
 }
-

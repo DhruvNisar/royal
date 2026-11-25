@@ -39,6 +39,8 @@ import { HiLoGame } from './games/hilo/HiLoGame';
 import { HorseRacingGame } from './games/horse_racing/HorseRacingGame';
 import { BingoGame } from './games/bingo/BingoGame';
 import { DealNoDealGame } from './games/deal_no_deal/DealNoDealGame';
+import { TreasureTrailGame } from './games/treasure_trail/TreasureTrailGame';
+import { CoinPusherGame } from './games/coin_pusher/CoinPusherGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -395,6 +397,30 @@ export default function App() {
             onUpdateProfile={refreshProfile}
             onOpenRules={() => {
               setSelectedGameForRules('deal_no_deal');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_treasure_trail' && (
+          <TreasureTrailGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('treasure_trail');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_coin_pusher' && (
+          <CoinPusherGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('coin_pusher');
               setIsRulesOpen(true);
             }}
             onBackToLobby={handleExitGame}

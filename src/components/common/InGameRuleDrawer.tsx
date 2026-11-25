@@ -43,6 +43,8 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'horse_racing' && 'Royal Horse Racing – Derby Betting & Plackett-Luce Odds Guide'}
                 {gameId === 'bingo' && 'Royal Bingo – Official 90-Ball Ticket & Milestone Guide'}
                 {gameId === 'deal_no_deal' && 'Royal Deal or No Deal – Briefcase & Banker Rules Guide'}
+                {gameId === 'treasure_trail' && 'Royal Treasure Trail – 10-Stage Adventure & Cashout Guide'}
+                {gameId === 'coin_pusher' && 'Royal Coin Pusher – Arcade Lanes & Payout Odds Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -367,6 +369,45 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">DEAL vs NO DEAL:</strong> Choosing <strong>DEAL</strong> (after confirmation) ends the round immediately and credits the exact Banker offer (your personal case is shown for curiosity only and not paid in addition). Choosing <strong>NO DEAL</strong> costs nothing extra and unlocks the next round.</li>
                 <li><strong className="text-slate-100">Final Keep or Swap:</strong> Reject the final 2-case offer to either <strong>KEEP MY CASE</strong> or <strong>SWAP MY CASE</strong> for the last remaining stage case.</li>
                 <li><strong className="text-slate-100">Payouts &amp; Settlement:</strong> Gross Payout = <span className="font-mono text-slate-200">round(Bet × Final Multiplier)</span>; Net Profit/Loss = Gross Payout − Original Bet. Credited once to your ROYAL ACE virtual wallet.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* TREASURE TRAIL RULES */}
+          {gameId === 'treasure_trail' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Guide your expedition across 10 ancient temple stages. At each stage, open 1 of 3 sealed doors—two reveal treasure and advance your multiplier, while one triggers a trap.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Three Paths Per Stage:</strong> Every stage has exactly 2 safe treasure doors and 1 trap door, cryptographically locked across all 10 stages before the round starts.</li>
+                <li><strong className="text-slate-100">Stage Progression:</strong> Selecting a safe door unlocks the stage reward. Previously completed stages remain clearly marked along the 10-stage temple trail.</li>
+                <li><strong className="text-slate-100">Exact 95% RTP Multipliers:</strong> <span className="font-mono text-emerald-300">M(k) = 0.95 / (2/3)^k</span> — climbing from <strong>1.425×</strong> at Stage 1, <strong>2.1375×</strong> at Stage 2, <strong>3.20625×</strong> at Stage 3, up to <strong>54.7818×</strong> at Stage 10.</li>
+                <li><strong className="text-slate-100">Continue or Collect Winnings:</strong> After each safe stage, choose <strong>COLLECT WINNINGS</strong> to credit <span className="font-mono text-slate-200">round(Bet × M(k))</span> once and finish, or <strong>CONTINUE</strong> to risk your reward for the next stage.</li>
+                <li><strong className="text-slate-100">Trap &amp; Stage 10 Clear:</strong> Choosing a trap immediately ends the adventure and forfeits your original bet. Completing all 10 stages automatically settles the maximum reward.</li>
+                <li><strong className="text-slate-100">Gross Payout Clarity:</strong> Multipliers include your original stake (Net Profit = Gross Payout − Original Bet). Fictional virtual coins only.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* COIN PUSHER RULES */}
+          {gameId === 'coin_pusher' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Pick a drop lane and release a virtual coin onto the moving brass pusher deck to cascade coins and royal prize tokens over the front lip into the collection tray.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Betting &amp; Lanes:</strong> Wager 10 to 5,000 virtual coins per drop and select any of the 5 drop lanes (L1–L5). Lane selection controls the visual drop path without altering published probabilities.</li>
+                <li><strong className="text-slate-100">Four Published Outcomes (95.00% RTP):</strong>
+                  <ul className="pl-5 mt-1 space-y-0.5 list-disc">
+                    <li><strong>No Prize (20%):</strong> 0.00× — no prize tokens fall into the tray.</li>
+                    <li><strong>Small Prize (20%):</strong> 0.50× — a small coin group falls into the tray.</li>
+                    <li><strong>Normal Prize (40%):</strong> 1.00× — a standard cascade of coins &amp; emerald tokens drops.</li>
+                    <li><strong>Big Prize (20%):</strong> 2.25× — an impressive royal avalanche of gold coins &amp; ruby medallions pours into the tray!</li>
+                  </ul>
+                </li>
+                <li><strong className="text-slate-100">Outcome Integrity:</strong> Each drop&apos;s outcome is generated via <span className="font-mono text-slate-200">crypto.getRandomValues</span> and locked before the animation starts. The falling tokens always match the exact settled payout.</li>
+                <li><strong className="text-slate-100">Gross Payout &amp; Net Profit:</strong> Gross Payout = <span className="font-mono text-emerald-300">round(Bet × Multiplier)</span> (includes original stake); Net Profit/Loss = Gross Payout − Bet. Credited once per drop.</li>
               </ul>
             </div>
           )}

@@ -17,6 +17,8 @@ import {
   gameHorseRacingTrackImg,
   gameBingoHallImg,
   gameDealNoDealStageImg,
+  gameTreasureTrailTempleImg,
+  gameCoinPusherArcadeImg,
 } from '../assets/images';
 
 interface GamesListProps {
@@ -209,6 +211,28 @@ const ALL_GAMES: GameCardItem[] = [
     maxBet: 2000,
     rulesHighlight: '26 Briefcases · Dynamic Banker Offers · Up to 1,000x',
     image: gameDealNoDealStageImg,
+  },
+  {
+    id: 'treasure_trail',
+    title: 'Royal Treasure Trail',
+    category: 'arcade',
+    categoryLabel: 'Adventure / Arcade',
+    description: 'Journey through 10 ancient temple stages. Pick 1 of 3 sealed doors—two hold treasure, one hides a trap—and collect winnings anytime up to 54.78x.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '10 Temple Stages · 2 Safe / 1 Trap · Up to 54.78x · 95% RTP',
+    image: gameTreasureTrailTempleImg,
+  },
+  {
+    id: 'coin_pusher',
+    title: 'Royal Coin Pusher',
+    category: 'arcade',
+    categoryLabel: 'Arcade Machine',
+    description: 'Drop coins into 5 lanes onto a live reciprocating brass pusher shelf and cascade gold coins and ruby medallions into the collection tray.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '5 Drop Lanes · Live Animated Pusher · Up to 2.25x · 95% RTP',
+    image: gameCoinPusherArcadeImg,
   },
 ];
 

@@ -38,6 +38,8 @@ export const RulesModal: React.FC<RulesModalProps> = ({
     { id: 'horse_racing', label: 'Horse Racing' },
     { id: 'bingo', label: 'Royal Bingo' },
     { id: 'deal_no_deal', label: 'Deal or No Deal' },
+    { id: 'treasure_trail', label: 'Treasure Trail' },
+    { id: 'coin_pusher', label: 'Coin Pusher' },
   ];
 
   return (
@@ -502,6 +504,67 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     <li>• Banker Offer = <span className="text-emerald-400 font-bold">Bet × (EV × 55% → 85%)</span></li>
                     <li>• Accepting DEAL pays the exact offer (original case shown for suspense only)</li>
                     <li>• Net Profit/Loss = Gross Payout − Original Bet, settled once</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'treasure_trail' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Treasure Trail – 10-Stage Adventure Rules</h3>
+              <p>
+                Embark on a 10-stage ancient temple expedition. At every stage, choose 1 of 3 sealed treasure doors: two doors lead safely to golden relics, while one conceals a dangerous trap.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Stages, Traps &amp; Cashout</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• 3 paths per stage: <span className="text-emerald-400 font-bold">2 Safe</span> and <span className="text-rose-400 font-bold">1 Trap</span></li>
+                    <li>• Full 10-stage map locked before play via <span className="font-mono text-slate-200">crypto.getRandomValues</span></li>
+                    <li>• After any safe stage, choose <span className="text-amber-300 font-bold">CONTINUE</span> or <span className="text-emerald-400 font-bold">COLLECT WINNINGS</span></li>
+                    <li>• Selecting a trap ends the round immediately and forfeits the stake</li>
+                    <li>• Clearing Stage 10 automatically settles the max reward</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Multiplier Formula (95% RTP)</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Survival Probability: <span className="font-mono text-slate-200">P(k) = (2/3)^k</span></li>
+                    <li>• Gross Multiplier: <span className="font-mono text-amber-300">M(k) = 0.95 / (2/3)^k</span></li>
+                    <li>• S1: 1.425× · S2: 2.1375× · S3: 3.2063× · S5: 7.214×</li>
+                    <li>• S8: 24.35× · S9: 36.52× · <span className="text-amber-300 font-bold">S10: 54.7818×</span></li>
+                    <li>• Gross Payout = <span className="font-mono text-slate-200">round(Bet × M(k))</span> (includes original stake)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'coin_pusher' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Coin Pusher – Arcade Drop Rules &amp; Odds</h3>
+              <p>
+                Set your bet per drop (10–5,000 coins), choose any of the 5 top drop lanes, and release a coin onto the reciprocating brass pusher deck. Coins and prize tokens pushed over the front edge into the collection tray award your payout.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Published Outcome Odds (95% RTP)</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• <span className="text-slate-300 font-bold">No Prize:</span> 20% probability · <span className="font-mono">0.00×</span></li>
+                    <li>• <span className="text-sky-300 font-bold">Small Prize:</span> 20% probability · <span className="font-mono">0.50×</span></li>
+                    <li>• <span className="text-emerald-300 font-bold">Normal Prize:</span> 40% probability · <span className="font-mono">1.00×</span></li>
+                    <li>• <span className="text-amber-300 font-bold">Big Prize:</span> 20% probability · <span className="font-mono">2.25×</span></li>
+                    <li>• Expected Return: <span className="font-mono text-emerald-400">0.9500 (95.00% RTP)</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Payouts &amp; Visual Integrity</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Outcome is locked via <span className="font-mono text-slate-200">crypto.getRandomValues</span> before drop animation</li>
+                    <li>• Lane selection is visual and never alters published probabilities</li>
+                    <li>• Gross Payout = <span className="font-mono text-slate-200">round(Bet × Multiplier)</span> (includes original stake)</li>
+                    <li>• Net Profit/Loss = <span className="font-mono text-slate-200">Gross Payout − Bet</span>, settled once per drop</li>
                   </ul>
                 </div>
               </div>
