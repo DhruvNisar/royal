@@ -14,6 +14,8 @@ import {
   gameMinesVaultImg,
   gameKenoBoardImg,
   gameHiLoTableImg,
+  gameHorseRacingTrackImg,
+  gameBingoHallImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -155,6 +157,26 @@ export const Lobby: React.FC<LobbyProps> = ({
       payout: 'Streak Multipliers',
       image: gameHiLoTableImg,
       badge: 'New Card Game',
+    },
+    {
+      id: 'horse_racing' as GameId,
+      title: 'Royal Horse Racing',
+      subtitle: '6-Lane Turf Derby · Win to Trifecta',
+      category: 'Racing / Arcade',
+      minBet: '10 coins',
+      payout: 'Exotic Odds',
+      image: gameHorseRacingTrackImg,
+      badge: 'New Derby',
+    },
+    {
+      id: 'bingo' as GameId,
+      title: 'Royal Bingo',
+      subtitle: 'Official 90-Ball · 3×9 Ticket',
+      category: 'Numbers / Hall',
+      minBet: '10 coins',
+      payout: 'Up to 28.9x',
+      image: gameBingoHallImg,
+      badge: 'New Hall',
     },
   ];
 

@@ -40,6 +40,8 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'mines' && 'Royal Mines – Vault Grid & Multiplier Guide'}
                 {gameId === 'keno' && 'Royal Keno – Numbers, Hits & Hypergeometric Paytable Guide'}
                 {gameId === 'hilo' && 'Royal Hi-Lo – Rules, Card Ranks & Dynamic Odds Guide'}
+                {gameId === 'horse_racing' && 'Royal Horse Racing – Derby Betting & Plackett-Luce Odds Guide'}
+                {gameId === 'bingo' && 'Royal Bingo – Official 90-Ball Ticket & Milestone Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -309,6 +311,42 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">Streak Compounding:</strong> Multipliers compound across consecutive wins: <span className="font-mono text-slate-200">Potential Payout = Bet × Total Multiplier</span>.</li>
                 <li><strong className="text-slate-100">Cash Out:</strong> Available after every correct prediction. Collect your multiplied payout instantly.</li>
                 <li><strong className="text-slate-100">Incorrect Guess:</strong> Ends the round immediately and forfeits the initial wager.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* HORSE RACING RULES */}
+          {gameId === 'horse_racing' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Study the 6 thoroughbreds, choose your wager type and horse picks, and watch the live derby sprint down the emerald turf to the photo finish.
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Win (1 Horse):</strong> Your chosen horse must finish 1st.</li>
+                <li><strong className="text-slate-100">Place (1 Horse):</strong> Your chosen horse must finish 1st or 2nd.</li>
+                <li><strong className="text-slate-100">Show (1 Horse):</strong> Your chosen horse must finish 1st, 2nd, or 3rd.</li>
+                <li><strong className="text-slate-100">Exacta (2 Horses):</strong> Your two picks must finish 1st and 2nd in exact order.</li>
+                <li><strong className="text-slate-100">Quinella (2 Horses):</strong> Your two picks must finish 1st and 2nd in either order.</li>
+                <li><strong className="text-slate-100">Trifecta (3 Horses):</strong> Your three picks must finish 1st, 2nd, and 3rd in exact order.</li>
+                <li><strong className="text-slate-100">Exact Plackett-Luce Odds (95% RTP):</strong> Every race evaluates all 720 possible 6-horse finishing orders from the horses&apos; strength weights. Outcomes are locked via <span className="font-mono text-slate-200">crypto.getRandomValues</span> before the starting gate opens.</li>
+                <li><strong className="text-slate-100">Payouts:</strong> Gross Payout = <span className="font-mono text-emerald-300">round(Bet × Multiplier)</span> in fictional virtual coins only.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* BINGO RULES */}
+          {gameId === 'bingo' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Play an official 90-ball 3×9 Bingo ticket and complete One Line, Two Lines, and Full House within their challenge call targets to stack cumulative virtual coin rewards!
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Official 3×9 Ticket:</strong> 3 rows × 9 columns with exactly 5 numbers and 4 blanks per row (15 numbers total). Columns span 1–9, 10–19, …, 80–90 in ascending vertical order.</li>
+                <li><strong className="text-slate-100">One Line (≤ 35 Calls):</strong> Complete any 1 horizontal row (5 numbers) within 35 calls to earn <span className="text-amber-300 font-bold">5.0x</span> your bet.</li>
+                <li><strong className="text-slate-100">Two Lines (≤ 55 Calls):</strong> Complete any 2 horizontal rows (10 numbers) within 55 calls to earn <span className="text-amber-300 font-bold">10.0x</span> your bet.</li>
+                <li><strong className="text-slate-100">Full House (≤ 75 Calls):</strong> Mark all 15 numbers within 75 calls to earn <span className="text-amber-300 font-bold">13.9x</span> your bet (up to <span className="text-emerald-300 font-bold">28.9x</span> combined!).</li>
+                <li><strong className="text-slate-100">Continuous Draw &amp; Fairness:</strong> Missing an earlier target never stops the draw—later milestones remain live up to Full House or call 90. Draws use unbiased cryptographic Fisher-Yates shuffling (~95.05% theoretical RTP).</li>
+                <li><strong className="text-slate-100">Draw Controls:</strong> Draw balls manually one-by-one, toggle Auto-Draw (Normal / Fast), or click Finish Draw at any time.</li>
               </ul>
             </div>
           )}

@@ -35,6 +35,8 @@ export const RulesModal: React.FC<RulesModalProps> = ({
     { id: 'mines', label: 'Royal Mines' },
     { id: 'keno', label: 'Royal Keno' },
     { id: 'hilo', label: 'Royal Hi-Lo' },
+    { id: 'horse_racing', label: 'Horse Racing' },
+    { id: 'bingo', label: 'Royal Bingo' },
   ];
 
   return (
@@ -412,6 +414,64 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     <li>• Impossible predictions (e.g. Higher on Ace) are disabled</li>
                     <li>• Cash Out: Available after any winning prediction to lock in your multiplied payout</li>
                     <li>• Incorrect prediction forfeits the initial stake</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'horse_racing' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Horse Racing – Derby Rules &amp; Odds</h3>
+              <p>
+                Six distinct thoroughbreds race down an animated 6-lane turf track. Every race computes exact Plackett-Luce probabilities across all 720 possible finishing orders with 95% theoretical RTP.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Straight Bets</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• <span className="text-amber-300 font-bold">Win:</span> Selected horse finishes 1st</li>
+                    <li>• <span className="text-amber-300 font-bold">Place:</span> Selected horse finishes 1st or 2nd</li>
+                    <li>• <span className="text-amber-300 font-bold">Show:</span> Selected horse finishes 1st, 2nd, or 3rd</li>
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 5,000 virtual coins</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Exotic Multi-Horse Bets</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• <span className="text-amber-300 font-bold">Exacta:</span> Pick 1st &amp; 2nd in exact order</li>
+                    <li>• <span className="text-amber-300 font-bold">Quinella:</span> Pick 1st &amp; 2nd in either order</li>
+                    <li>• <span className="text-amber-300 font-bold">Trifecta:</span> Pick 1st, 2nd &amp; 3rd in exact order</li>
+                    <li>• Outcome locked cryptographically before countdown</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'bingo' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Bingo (90-Ball) Rules &amp; Payouts</h3>
+              <p>
+                Play an authentic 3×9 90-ball Bingo ticket containing 15 unique numbers (5 per row). Draw balls manually or with Auto-Draw and hit cumulative challenge milestones within their call limits.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Milestone Targets (95.05% RTP)</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• <span className="text-amber-300 font-bold">One Line (≤ 35 calls):</span> 5.0x ticket wager</li>
+                    <li>• <span className="text-amber-300 font-bold">Two Lines (≤ 55 calls):</span> 10.0x ticket wager</li>
+                    <li>• <span className="text-amber-300 font-bold">Full House (≤ 75 calls):</span> 13.9x ticket wager</li>
+                    <li>• <span className="text-emerald-400 font-bold">Combined Max Win:</span> 28.9x wager</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Ticket &amp; Draw Rules</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Column ranges: 1–9, 10–19, …, 80–90 ascending</li>
+                    <li>• Missing an early target keeps later targets active</li>
+                    <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 2,000 virtual coins</span></li>
+                    <li>• Unbiased 90-ball cryptographic Fisher-Yates draw</li>
                   </ul>
                 </div>
               </div>

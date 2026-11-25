@@ -793,6 +793,124 @@ class CasinoSoundEngine {
     this.playCrashCashOut();
   }
 
+  // --- Royal Horse Racing Synthesized SFX ---
+  public playRaceCountdownTick(isGo: boolean = false) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = isGo ? 'triangle' : 'sine';
+    osc.frequency.setValueAtTime(isGo ? 1046.5 : 523.25, now);
+    if (isGo) {
+      osc.frequency.exponentialRampToValueAtTime(1318.5, now + 0.16);
+    }
+
+    gain.gain.setValueAtTime((isGo ? 0.18 : 0.1) * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + (isGo ? 0.28 : 0.12));
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + (isGo ? 0.3 : 0.14));
+  }
+
+  public playRaceStartBell() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    [880, 1320, 1760].forEach((freq, idx) => {
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.02);
+
+      gain.gain.setValueAtTime(0.12 * this.settings.masterVolume, now + idx * 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + idx * 0.02);
+      osc.stop(now + 0.48);
+    });
+  }
+
+  public playHorseGallopStep() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(145 + Math.random() * 35, now);
+    osc.frequency.exponentialRampToValueAtTime(55, now + 0.045);
+
+    gain.gain.setValueAtTime(0.055 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.055);
+  }
+
+  // --- Royal Bingo Synthesized SFX ---
+  public playBingoBallPop(ballNumber: number = 45) {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const baseFreq = 360 + (ballNumber % 15) * 28;
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(baseFreq * 0.7, now);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.25, now + 0.06);
+
+    gain.gain.setValueAtTime(0.1 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.1);
+  }
+
+  public playBingoMark() {
+    this.initContext();
+    if (!this.ctx || !this.settings.sfxEnabled) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(740, now);
+    osc.frequency.exponentialRampToValueAtTime(1108.73, now + 0.1);
+
+    gain.gain.setValueAtTime(0.13 * this.settings.masterVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.14);
+  }
+
+  public playBingoMilestone(tier: 1 | 2 | 3) {
+    if (tier === 3) {
+      this.playBigWin();
+    } else {
+      this.playWin();
+    }
+  }
+
   // Lounge Ambient Chord Drone
   private startAmbientMusic() {
     if (this.ambientInterval) return;

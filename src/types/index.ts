@@ -11,7 +11,7 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo' | 'horse_racing' | 'bingo';
 
 export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
@@ -400,6 +400,107 @@ export interface HiLoStats {
   pushesCount: number;
   highestMultiplier: number;
   longestStreak: number;
+  winRate: number;
+}
+
+/* Royal Horse Racing */
+export type HorseBetType = 'WIN' | 'PLACE' | 'SHOW' | 'EXACTA' | 'QUINELLA' | 'TRIFECTA';
+
+export type HorseRacePhase = 'BETTING' | 'COUNTDOWN' | 'RACING' | 'FINISHED';
+
+export interface HorseRunner {
+  number: 1 | 2 | 3 | 4 | 5 | 6;
+  name: string;
+  silkPrimary: string;
+  silkSecondary: string;
+  coatColor: string;
+  maneColor: string;
+  strengthWeight: number;
+  rating: number; // 1..100 display rating
+  winProbability: number;
+  winMultiplier: number;
+  placeMultiplier: number;
+  showMultiplier: number;
+}
+
+export interface HorseRaceBet {
+  type: HorseBetType;
+  selections: number[]; // Horse numbers (1..6)
+  amount: number;
+  probability: number;
+  multiplier: number;
+  potentialPayout: number;
+  potentialNet: number;
+}
+
+export interface HorseRaceResult {
+  id: string;
+  raceNumber: number;
+  raceTitle: string;
+  timestamp: number;
+  horses: { number: number; name: string; silkPrimary: string }[];
+  finishOrder: number[]; // Array of 6 horse numbers from 1st to 6th
+  betType: HorseBetType;
+  selections: number[];
+  betAmount: number;
+  multiplier: number;
+  payout: number;
+  net: number;
+  isWin: boolean;
+}
+
+export interface HorseRaceStats {
+  racesPlayed: number;
+  totalWagered: number;
+  totalWon: number;
+  netProfit: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  bestPayout: number;
+}
+
+/* Royal Bingo (90-Ball) */
+export type BingoPhase = 'SETUP' | 'DRAWING' | 'FINISHED';
+
+export type BingoMilestoneId = 'ONE_LINE' | 'TWO_LINES' | 'FULL_HOUSE';
+
+export type BingoTicketCell = number | null;
+export type BingoTicketGrid = BingoTicketCell[][]; // 3 rows x 9 columns
+
+export interface BingoMilestoneOutcome {
+  id: BingoMilestoneId;
+  label: string;
+  targetCalls: number;
+  multiplier: number;
+  achievedAtCall: number | null;
+  earned: boolean;
+  reward: number;
+}
+
+export interface BingoRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  ticketNumbers: number[];
+  totalCallsMade: number;
+  oneLine: { achievedAtCall: number | null; earned: boolean; reward: number };
+  twoLines: { achievedAtCall: number | null; earned: boolean; reward: number };
+  fullHouse: { achievedAtCall: number | null; earned: boolean; reward: number };
+  totalReward: number;
+  net: number;
+  isWin: boolean;
+}
+
+export interface BingoStats {
+  roundsPlayed: number;
+  totalWagered: number;
+  totalWon: number;
+  netProfit: number;
+  oneLineWins: number;
+  twoLinesWins: number;
+  fullHouseWins: number;
+  bestReward: number;
   winRate: number;
 }
 

@@ -216,9 +216,125 @@ body {
   animation: minesBombShake 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Royal Horse Racing Gallop & Track Keyframes */
+@keyframes horseGallopBody {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+@keyframes horseLegFront {
+  0%, 100% {
+    transform: rotate(-28deg);
+  }
+  50% {
+    transform: rotate(32deg);
+  }
+}
+
+@keyframes horseLegBack {
+  0%, 100% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(-26deg);
+  }
+}
+
+@keyframes horseDustPuff {
+  0% {
+    transform: translateX(0) scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-16px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.animate-horse-gallop {
+  animation: horseGallopBody 0.26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-horse-leg-front {
+  transform-origin: 48px 25px;
+  animation: horseLegFront 0.26s ease-in-out infinite;
+}
+
+.animate-horse-leg-back {
+  transform-origin: 20px 26px;
+  animation: horseLegBack 0.26s ease-in-out infinite;
+}
+
+.animate-horse-dust {
+  animation: horseDustPuff 0.38s ease-out infinite;
+}
+
+/* Royal Bingo Machine & Ball Roll Keyframes */
+@keyframes bingoDrumSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bingoBallEmerge {
+  0% {
+    transform: translateX(-64px) rotate(-360deg) scale(0.55);
+    opacity: 0;
+  }
+  65% {
+    transform: translateX(6px) rotate(25deg) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bingoMarkPop {
+  0% {
+    transform: scale(0.75);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-bingo-drum {
+  animation: bingoDrumSpin 1.4s linear infinite;
+  will-change: transform;
+}
+
+.animate-bingo-ball-roll {
+  animation: bingoBallEmerge 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-bingo-mark-pop {
+  animation: bingoMarkPop 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-mines-diamond,
-  .animate-mines-bomb {
+  .animate-mines-bomb,
+  .animate-horse-gallop,
+  .animate-horse-leg-front,
+  .animate-horse-leg-back,
+  .animate-horse-dust,
+  .animate-bingo-drum,
+  .animate-bingo-ball-roll,
+  .animate-bingo-mark-pop {
     animation: none;
   }
 }

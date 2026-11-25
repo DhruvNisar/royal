@@ -14,6 +14,8 @@ import {
   gameMinesVaultImg,
   gameKenoBoardImg,
   gameHiLoTableImg,
+  gameHorseRacingTrackImg,
+  gameBingoHallImg,
 } from '../assets/images';
 
 interface GamesListProps {
@@ -173,6 +175,28 @@ const ALL_GAMES: GameCardItem[] = [
     maxBet: 5000,
     rulesHighlight: '52-Card Deck · Real-Time Odds · Aces High · 97% RTP',
     image: gameHiLoTableImg,
+  },
+  {
+    id: 'horse_racing',
+    title: 'Royal Horse Racing',
+    category: 'arcade',
+    categoryLabel: 'Racing / Arcade',
+    description: 'Watch 6 thoroughbreds sprint live down the emerald turf. Bet Win, Place, Show, Exacta, Quinella, or Trifecta with exact 95% RTP odds.',
+    minBet: 10,
+    maxBet: 5000,
+    rulesHighlight: '6 Runners · Live Animated Turf Track · Exacta & Trifecta',
+    image: gameHorseRacingTrackImg,
+  },
+  {
+    id: 'bingo',
+    title: 'Royal Bingo',
+    category: 'table',
+    categoryLabel: 'Numbers / Hall',
+    description: 'Official 90-ball 3×9 Bingo tickets with an animated brass caller drum. Hit One Line, Two Lines, and Full House milestones up to 28.9x.',
+    minBet: 10,
+    maxBet: 2000,
+    rulesHighlight: '90-Ball 3×9 Ticket · Animated Caller · Up to 28.9x',
+    image: gameBingoHallImg,
   },
 ];
 

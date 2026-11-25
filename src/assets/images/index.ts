@@ -9,6 +9,8 @@ import gameCrashRocketImg from './game_crash_rocket_1794738266372.jpg';
 import gameMinesVaultImg from './game_mines_vault_1794740654945.jpg';
 import gameKenoBoardImg from './game_keno_board_1794766044891.jpg';
 import gameHiLoTableImg from './game_hilo_table_1794769036756.jpg';
+import gameHorseRacingTrackImg from './game_horse_racing_track_1795598711077.jpg';
+import gameBingoHallImg from './game_bingo_hall_1795598711208.jpg';
 
 export {
   casinoHeroLoungeImg,
@@ -22,4 +24,6 @@ export {
   gameMinesVaultImg,
   gameKenoBoardImg,
   gameHiLoTableImg,
+  gameHorseRacingTrackImg,
+  gameBingoHallImg,
 };

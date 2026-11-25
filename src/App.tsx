@@ -36,6 +36,8 @@ import { CrashGame } from './games/crash/CrashGame';
 import { MinesGame } from './games/mines/MinesGame';
 import { KenoGame } from './games/keno/KenoGame';
 import { HiLoGame } from './games/hilo/HiLoGame';
+import { HorseRacingGame } from './games/horse_racing/HorseRacingGame';
+import { BingoGame } from './games/bingo/BingoGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -356,6 +358,30 @@ export default function App() {
             onUpdateProfile={refreshProfile}
             onOpenRules={() => {
               setSelectedGameForRules('hilo');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_horse_racing' && (
+          <HorseRacingGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('horse_racing');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_bingo' && (
+          <BingoGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('bingo');
               setIsRulesOpen(true);
             }}
             onBackToLobby={handleExitGame}
