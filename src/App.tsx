@@ -38,6 +38,7 @@ import { KenoGame } from './games/keno/KenoGame';
 import { HiLoGame } from './games/hilo/HiLoGame';
 import { HorseRacingGame } from './games/horse_racing/HorseRacingGame';
 import { BingoGame } from './games/bingo/BingoGame';
+import { DealNoDealGame } from './games/deal_no_deal/DealNoDealGame';
 
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -382,6 +383,18 @@ export default function App() {
             onUpdateProfile={refreshProfile}
             onOpenRules={() => {
               setSelectedGameForRules('bingo');
+              setIsRulesOpen(true);
+            }}
+            onBackToLobby={handleExitGame}
+          />
+        )}
+
+        {currentView === 'game_deal_no_deal' && (
+          <DealNoDealGame
+            profile={profile}
+            onUpdateProfile={refreshProfile}
+            onOpenRules={() => {
+              setSelectedGameForRules('deal_no_deal');
               setIsRulesOpen(true);
             }}
             onBackToLobby={handleExitGame}

@@ -325,6 +325,141 @@ body {
   animation: bingoMarkPop 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Royal Deal or No Deal Keyframes */
+@keyframes dndCaseSelectPop {
+  0% {
+    transform: scale(0.92);
+  }
+  55% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dndLidSwingOpen {
+  0% {
+    transform: perspective(600px) rotateX(0deg);
+  }
+  35% {
+    transform: perspective(600px) rotateX(-14deg);
+  }
+  100% {
+    transform: perspective(600px) rotateX(-118deg);
+  }
+}
+
+@keyframes dndPrizeRise {
+  0% {
+    transform: translateY(18px) scale(0.76);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(-4px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dndPhoneRing {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    transform: rotate(-14deg) scale(1.06);
+  }
+  30% {
+    transform: rotate(14deg) scale(1.06);
+  }
+  45% {
+    transform: rotate(-10deg) scale(1.04);
+  }
+  60% {
+    transform: rotate(10deg) scale(1.04);
+  }
+  75% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes dndRingPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+@keyframes dndEliminateFlash {
+  0% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.96);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.42;
+  }
+}
+
+@keyframes dndSlamIn {
+  0% {
+    transform: scale(1.32);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(0.96);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-dnd-select {
+  animation: dndCaseSelectPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-dnd-lid-open {
+  transform-origin: top center;
+  animation: dndLidSwingOpen 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform;
+}
+
+.animate-dnd-prize-rise {
+  animation: dndPrizeRise 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-dnd-phone-ring {
+  animation: dndPhoneRing 0.72s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-dnd-ring-pulse {
+  animation: dndRingPulse 1.15s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.animate-dnd-eliminate {
+  animation: dndEliminateFlash 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-dnd-slam {
+  animation: dndSlamIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-mines-diamond,
   .animate-mines-bomb,
@@ -334,7 +469,14 @@ body {
   .animate-horse-dust,
   .animate-bingo-drum,
   .animate-bingo-ball-roll,
-  .animate-bingo-mark-pop {
+  .animate-bingo-mark-pop,
+  .animate-dnd-select,
+  .animate-dnd-lid-open,
+  .animate-dnd-prize-rise,
+  .animate-dnd-phone-ring,
+  .animate-dnd-ring-pulse,
+  .animate-dnd-eliminate,
+  .animate-dnd-slam {
     animation: none;
   }
 }

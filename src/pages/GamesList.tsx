@@ -16,6 +16,7 @@ import {
   gameHiLoTableImg,
   gameHorseRacingTrackImg,
   gameBingoHallImg,
+  gameDealNoDealStageImg,
 } from '../assets/images';
 
 interface GamesListProps {
@@ -197,6 +198,17 @@ const ALL_GAMES: GameCardItem[] = [
     maxBet: 2000,
     rulesHighlight: '90-Ball 3×9 Ticket · Animated Caller · Up to 28.9x',
     image: gameBingoHallImg,
+  },
+  {
+    id: 'deal_no_deal',
+    title: 'Royal Deal or No Deal',
+    category: 'arcade',
+    categoryLabel: 'Game Show / VIP',
+    description: 'Claim 1 of 26 golden briefcases hiding 0.01x to 1,000x prizes. Open cases round by round, face dynamic Banker offers, or risk the final Keep or Swap.',
+    minBet: 10,
+    maxBet: 2000,
+    rulesHighlight: '26 Briefcases · Dynamic Banker Offers · Up to 1,000x',
+    image: gameDealNoDealStageImg,
   },
 ];
 

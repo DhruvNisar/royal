@@ -42,6 +42,7 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 {gameId === 'hilo' && 'Royal Hi-Lo – Rules, Card Ranks & Dynamic Odds Guide'}
                 {gameId === 'horse_racing' && 'Royal Horse Racing – Derby Betting & Plackett-Luce Odds Guide'}
                 {gameId === 'bingo' && 'Royal Bingo – Official 90-Ball Ticket & Milestone Guide'}
+                {gameId === 'deal_no_deal' && 'Royal Deal or No Deal – Briefcase & Banker Rules Guide'}
               </h2>
               <p className="text-[11px] text-slate-400">Everything you need to master this table</p>
             </div>
@@ -347,6 +348,25 @@ export const InGameRuleDrawer: React.FC<InGameRuleDrawerProps> = ({ gameId, isOp
                 <li><strong className="text-slate-100">Full House (≤ 75 Calls):</strong> Mark all 15 numbers within 75 calls to earn <span className="text-amber-300 font-bold">13.9x</span> your bet (up to <span className="text-emerald-300 font-bold">28.9x</span> combined!).</li>
                 <li><strong className="text-slate-100">Continuous Draw &amp; Fairness:</strong> Missing an earlier target never stops the draw—later milestones remain live up to Full House or call 90. Draws use unbiased cryptographic Fisher-Yates shuffling (~95.05% theoretical RTP).</li>
                 <li><strong className="text-slate-100">Draw Controls:</strong> Draw balls manually one-by-one, toggle Auto-Draw (Normal / Fast), or click Finish Draw at any time.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* DEAL OR NO DEAL RULES */}
+          {gameId === 'deal_no_deal' && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-amber-200">
+                <span className="font-bold text-amber-300">Objective:</span> Claim 1 of 26 golden briefcases containing hidden prize multipliers from 0.01x up to 1,000x, eliminate other briefcases round by round, and decide whether to accept the Banker&apos;s dynamic offer or trust your briefcase to the end!
+              </div>
+              <ul className="space-y-1.5 list-disc list-inside">
+                <li><strong className="text-slate-100">Entry Bet &amp; Wallet:</strong> Wager 10 to 2,000 virtual coins. Your stake is deducted once at game start and remains locked for the entire game.</li>
+                <li><strong className="text-slate-100">26 Unique Briefcases:</strong> Multipliers (0.01x, 0.05x, 0.10x, 0.25x, 0.50x, 0.75x, 1x, 2x, 3x, 5x, 7.5x, 10x, 15x, 20x, 25x, 35x, 50x, 75x, 100x, 150x, 200x, 250x, 350x, 500x, 750x, 1,000x) are shuffled cryptographically via <span className="font-mono text-slate-200">crypto.getRandomValues</span> and locked for the full game.</li>
+                <li><strong className="text-slate-100">Personal Case:</strong> Choose your personal case first; it stays sealed and protected from accidental opening until the final result.</li>
+                <li><strong className="text-slate-100">Opening Schedule:</strong> Round 1: open 6 cases · Round 2: 5 · Round 3: 4 · Round 4: 3 · Round 5: 2 · Round 6 onward: 1 per round.</li>
+                <li><strong className="text-slate-100">Dynamic Banker Offer:</strong> Calculated strictly from remaining unopened briefcases (including yours): <span className="font-mono text-emerald-300">Offer = Bet × (EV × Banker %)</span>, scaling progressively from 55% early game up to 85% in the final stage.</li>
+                <li><strong className="text-slate-100">DEAL vs NO DEAL:</strong> Choosing <strong>DEAL</strong> (after confirmation) ends the round immediately and credits the exact Banker offer (your personal case is shown for curiosity only and not paid in addition). Choosing <strong>NO DEAL</strong> costs nothing extra and unlocks the next round.</li>
+                <li><strong className="text-slate-100">Final Keep or Swap:</strong> Reject the final 2-case offer to either <strong>KEEP MY CASE</strong> or <strong>SWAP MY CASE</strong> for the last remaining stage case.</li>
+                <li><strong className="text-slate-100">Payouts &amp; Settlement:</strong> Gross Payout = <span className="font-mono text-slate-200">round(Bet × Final Multiplier)</span>; Net Profit/Loss = Gross Payout − Original Bet. Credited once to your ROYAL ACE virtual wallet.</li>
               </ul>
             </div>
           )}

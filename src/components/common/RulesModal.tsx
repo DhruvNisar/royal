@@ -37,6 +37,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
     { id: 'hilo', label: 'Royal Hi-Lo' },
     { id: 'horse_racing', label: 'Horse Racing' },
     { id: 'bingo', label: 'Royal Bingo' },
+    { id: 'deal_no_deal', label: 'Deal or No Deal' },
   ];
 
   return (
@@ -472,6 +473,35 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     <li>• Missing an early target keeps later targets active</li>
                     <li>• Stakes: <span className="text-slate-200 font-semibold">10 – 2,000 virtual coins</span></li>
                     <li>• Unbiased 90-ball cryptographic Fisher-Yates draw</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGame === 'deal_no_deal' && (
+            <div className="space-y-4">
+              <h3 className="font-serif font-bold text-amber-300 text-base">Royal Deal or No Deal – Briefcases &amp; Banker Rules</h3>
+              <p>
+                Place a single entry bet (10–2,000 coins), claim one personal briefcase from 26 sealed golden briefcases (0.01x up to 1,000x), and open the remaining cases across progressive rounds while negotiating dynamic Banker offers.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Rounds &amp; Briefcases</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• 26 unique multipliers (0.01x – 1,000x) shuffled via <span className="font-mono text-slate-200">crypto.getRandomValues</span></li>
+                    <li>• Round schedule: <span className="text-amber-300 font-bold">6, 5, 4, 3, 2, then 1 per round</span></li>
+                    <li>• Entry bet is deducted once; NO DEAL never charges extra</li>
+                    <li>• Final 2 cases unlock <span className="text-sky-300 font-bold">KEEP MY CASE</span> or <span className="text-sky-300 font-bold">SWAP MY CASE</span></li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div className="font-semibold text-amber-400 mb-1">Banker Offer &amp; Settlement</div>
+                  <ul className="space-y-1 text-xs">
+                    <li>• EV = Average of all unopened briefcases (including yours)</li>
+                    <li>• Banker Offer = <span className="text-emerald-400 font-bold">Bet × (EV × 55% → 85%)</span></li>
+                    <li>• Accepting DEAL pays the exact offer (original case shown for suspense only)</li>
+                    <li>• Net Profit/Loss = Gross Payout − Original Bet, settled once</li>
                   </ul>
                 </div>
               </div>

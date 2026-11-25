@@ -16,6 +16,7 @@ import {
   gameHiLoTableImg,
   gameHorseRacingTrackImg,
   gameBingoHallImg,
+  gameDealNoDealStageImg,
 } from '../assets/images';
 import {
   Sparkles,
@@ -177,6 +178,16 @@ export const Lobby: React.FC<LobbyProps> = ({
       payout: 'Up to 28.9x',
       image: gameBingoHallImg,
       badge: 'New Hall',
+    },
+    {
+      id: 'deal_no_deal' as GameId,
+      title: 'Royal Deal or No Deal',
+      subtitle: '26 Briefcases · Dynamic Banker',
+      category: 'Game Show / VIP',
+      minBet: '10 coins',
+      payout: 'Up to 1,000x',
+      image: gameDealNoDealStageImg,
+      badge: 'New Show',
     },
   ];
 

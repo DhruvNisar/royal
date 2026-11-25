@@ -11,7 +11,7 @@ export const CHIP_COLORS: Record<ChipDenomination, { bg: string; border: string;
   1000: { bg: '#854d0e', border: '#fde047', text: '#ffffff', stripe: '#fef08a' },  // Gold / Bronze
 };
 
-export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo' | 'horse_racing' | 'bingo';
+export type GameId = 'blackjack' | 'roulette' | 'poker' | 'baccarat' | 'dice' | 'slots' | 'teen_patti' | 'plinko' | 'crash' | 'mines' | 'keno' | 'hilo' | 'horse_racing' | 'bingo' | 'deal_no_deal';
 
 export type GameCategory = 'all' | 'cards' | 'table' | 'dice' | 'arcade' | 'multiplayer';
 
@@ -503,5 +503,68 @@ export interface BingoStats {
   bestReward: number;
   winRate: number;
 }
+
+/* Royal Deal or No Deal */
+export type DealNoDealState =
+  | 'BETTING'
+  | 'BRIEFCASE_SELECTION'
+  | 'OPENING_CASES'
+  | 'CASE_REVEAL'
+  | 'BANKER_CALL'
+  | 'BANKER_OFFER'
+  | 'DEAL_CONFIRMATION'
+  | 'NO_DEAL_RESPONSE'
+  | 'FINAL_DECISION'
+  | 'FINAL_REVEAL'
+  | 'SETTLED';
+
+export interface DealBriefcase {
+  caseNumber: number; // 1..26
+  multiplier: number;
+  isOpened: boolean;
+  isPlayerCase: boolean;
+}
+
+export interface BankerOfferSnapshot {
+  roundNumber: number;
+  remainingCasesCount: number;
+  averageRemainingMultiplier: number;
+  bankerPercentage: number;
+  offerMultiplier: number;
+  offerCoins: number;
+  lowestRemainingMultiplier: number;
+  highestRemainingMultiplier: number;
+  decision?: 'DEAL' | 'NO_DEAL';
+}
+
+export type DealFinalChoice = 'DEAL' | 'KEEP' | 'SWAP';
+
+export interface DealNoDealRoundResult {
+  id: string;
+  timestamp: number;
+  bet: number;
+  originalCaseNumber: number;
+  originalCaseMultiplier: number;
+  finalCaseNumber: number | null;
+  casesOpenedCount: number;
+  offersReceived: BankerOfferSnapshot[];
+  acceptedOffer: BankerOfferSnapshot | null;
+  finalChoice: DealFinalChoice;
+  finalMultiplier: number;
+  grossPayout: number;
+  netProfit: number;
+}
+
+export interface DealNoDealStats {
+  gamesPlayed: number;
+  totalWagered: number;
+  totalGrossWon: number;
+  totalNetProfit: number;
+  dealsAccepted: number;
+  dealsRejected: number;
+  biggestPayout: number;
+  highestMultiplierWon: number;
+}
+
 
 
